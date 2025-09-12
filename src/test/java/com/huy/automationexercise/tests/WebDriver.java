@@ -1,4 +1,4 @@
-package WebDriver;
+package com.huy.automationexercise.tests;
 import org.openqa.selenium.edge.EdgeDriver;
 public class WebDriver {
 
