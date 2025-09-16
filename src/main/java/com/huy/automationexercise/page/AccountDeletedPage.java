@@ -9,34 +9,26 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class AccountCreatedPage {
+public class AccountDeletedPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    @FindBy(xpath = "//b[text()='Account Created!']")
-    private WebElement accountCreatedTitle;
+    @FindBy(xpath = "//b[text()='Account Deleted!']")
+    private WebElement accountDeletedTitle;
 
     @FindBy(xpath = "//a[@data-qa='continue-button']")
     private WebElement continueButton;
 
-    public AccountCreatedPage(WebDriver driver) {
+    public AccountDeletedPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Verifies that the 'Account Created!' title is visible on the page.
-     * @return true if the title is visible, false otherwise.
-     */
-    public boolean isAccountCreatedTitleVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(accountCreatedTitle)).isDisplayed();
+    public boolean isAccountDeletedTitleVisible() {
+        return wait.until(ExpectedConditions.visibilityOf(accountDeletedTitle)).isDisplayed();
     }
 
-    /**
-     * Clicks the 'Continue' button and returns to the HomePage.
-     * @return A new instance of the HomePage.
-     */
     public HomePage clickContinue() {
         wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
         return new HomePage(driver);

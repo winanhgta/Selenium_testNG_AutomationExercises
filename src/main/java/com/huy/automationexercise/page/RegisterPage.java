@@ -39,6 +39,13 @@ public class RegisterPage {
     @FindBy(id = "years")
     private WebElement yearDropdown;
 
+    // --- Checkboxes ---
+    @FindBy(id = "newsletter")
+    private WebElement newsletterCheckbox;
+
+    @FindBy(id = "optin")
+    private WebElement specialOffersCheckbox;
+
     // --- Address Information ---
     @FindBy(id = "first_name")
     private WebElement firstNameInput;
@@ -107,6 +114,11 @@ public class RegisterPage {
         yearDropdown.sendKeys(year);
     }
 
+    public void selectCheckboxes() {
+        newsletterCheckbox.click();
+        specialOffersCheckbox.click();
+    }
+
     public void enterAddressInfo(String firstName, String lastName, String company, String address1,
                                  String address2, String country, String state, String city,
                                  String zipcode, String mobile) {
@@ -123,7 +135,7 @@ public class RegisterPage {
     }
 
     public AccountCreatedPage clickCreateAccount() {
-        createAccountButton.click();
-        return new AccountCreatedPage(driver);
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
+        return new AccountCreatedPage(driver); // This now correctly returns the next page
     }
 }

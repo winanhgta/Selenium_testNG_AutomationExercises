@@ -62,6 +62,9 @@ public class HomePage {
     @FindBy(xpath = "//a[contains(@href,'/login')]")
     private WebElement signupLoginLink;
 
+    @FindBy(xpath = "//a[contains(@href, '/delete_account')]")
+    private WebElement deleteAccountLink;
+
     // A stable element to verify the page has loaded
     @FindBy(className = "features_items")
     private WebElement featuresItemsSection;
@@ -83,6 +86,24 @@ public class HomePage {
      */
     public boolean isFeaturesItemsVisible() {
         return wait.until(ExpectedConditions.visibilityOf(featuresItemsSection)).isDisplayed();
+    }
+
+    /**
+     * Verifies that the 'Logged in as' text is visible on the page.
+     * @return true if the text element is visible, false otherwise.
+     */
+    public boolean isLoggedInAsTextVisible() {
+        // Wait for the element to be visible and then check its display status
+        return wait.until(ExpectedConditions.visibilityOf(loggedInAsText)).isDisplayed();
+    }
+
+    /**
+     * Clicks the 'Delete Account' link and navigates to the confirmation page.
+     * @return A new instance of the AccountDeletedPage.
+     */
+    public AccountDeletedPage clickDeleteAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
+        return new AccountDeletedPage(driver);
     }
 
     public String getTitle() {
