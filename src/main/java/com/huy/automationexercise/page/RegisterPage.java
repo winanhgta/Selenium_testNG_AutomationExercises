@@ -4,9 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegisterPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     // --- Title ---
     @FindBy(id = "id_gender1")
@@ -72,11 +77,20 @@ public class RegisterPage {
     // --- Constructor ---
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
+    }
+
+    // --- Verification ---
+    public boolean isAccountInformationTitleVisible() {
+        // Check for the visibility of a stable element on the page, like the password field.
+        // This confirms we are on the correct page.
+        return wait.until(ExpectedConditions.visibilityOf(passwordInput)).isDisplayed();
     }
 
     // --- Actions ---
     public void selectTitle(String title) {
+        wait.until(ExpectedConditions.elementToBeClickable(mrRadio));
         if (title.equalsIgnoreCase("Mr")) {
             mrRadio.click();
         } else {

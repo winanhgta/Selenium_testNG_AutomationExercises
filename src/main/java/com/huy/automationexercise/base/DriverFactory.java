@@ -10,16 +10,17 @@ public class DriverFactory {
 
     private static WebDriver driver;
 
-    // Khởi tạo driver (singleton)
     public static WebDriver getDriver() {
         if (driver == null) {
-            //WebDriverManager.edgedriver().setup(); // Tự động tải EdgeDriver
+            System.setProperty("webdriver.edge.driver", "D:/Download/edgedriver_win64/msedgedriver.exe");
             driver = new EdgeDriver();
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         }
         return driver;
     }
+
+
 
     // Mở website
     public static void launchWebsite(String url) {
