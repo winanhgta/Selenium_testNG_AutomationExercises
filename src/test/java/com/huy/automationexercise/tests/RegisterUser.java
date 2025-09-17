@@ -2,12 +2,18 @@ package com.huy.automationexercise.tests;
 
 import com.huy.automationexercise.base.BaseTest;
 import com.huy.automationexercise.page.*;
+import com.huy.automationexercise.utils.TestDataUtil;
+import com.huy.automationexercise.utils.UserData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class RegisterUser extends BaseTest {
     @Test
     public void testRegisterUserSuccessfully(){
+
+        // Create fake user data
+        UserData userData = TestDataUtil.generateUser();
+
         // HomePage → SignupLoginPage
         HomePage homePage = new HomePage(driver);
 
@@ -20,8 +26,7 @@ public class RegisterUser extends BaseTest {
                 "Signup form should be displayed");
 
         // SignupLoginPage → RegisterPage
-        String uniqueEmail = "huy" + System.currentTimeMillis() + "@mail.com";
-        RegisterPage registerPage = signupLoginPage.signup("Huy", uniqueEmail);
+        RegisterPage registerPage = signupLoginPage.signup(userData.getFirstName(), userData.getEmail());
 
         // Hard Assertion: Verify that the Register Page is loaded successfully
         Assert.assertTrue(registerPage.isAccountInformationTitleVisible(),
@@ -29,23 +34,23 @@ public class RegisterUser extends BaseTest {
 
         // --- Fill details: Title, Name, Email, Password, Date of birth ---
         registerPage.selectTitle("Mr");
-        registerPage.enterAccountInfo("Huy", "MySecurePassword123", "10", "May", "1990");
+        registerPage.enterAccountInfo(userData.getFirstName(), userData.getPassword(), "10", "May", "1990");
 
         // --- Select checkboxes ---
         registerPage.selectCheckboxes();
 
         // --- Fill details: Address Information ---
         registerPage.enterAddressInfo(
-                "Huy",
-                "Nguyen",
-                "Automation Corp",
-                "123 Test Street",
-                "Apt 4B",
-                "United States",
-                "California",
-                "Los Angeles",
-                "90001",
-                "5551234567"
+                userData.getFirstName(),
+                userData.getLastName(),
+                userData.getCompany(),
+                userData.getAddress1(),
+                userData.getAddress2(),
+                userData.getCountry(),
+                userData.getState(),
+                userData.getCity(),
+                userData.getZipCode(),
+                userData.getMobileNumber()
         );
 
         // --- Click 'Create Account Button'
