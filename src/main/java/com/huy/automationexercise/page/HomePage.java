@@ -65,6 +65,9 @@ public class HomePage {
     @FindBy(xpath = "//a[contains(@href, '/delete_account')]")
     private WebElement deleteAccountLink;
 
+    @FindBy(xpath = "//a[contains(@href, '/logout')]")
+    private WebElement logoutLink;
+
     // A stable element to verify the page has loaded
     @FindBy(className = "features_items")
     private WebElement featuresItemsSection;
@@ -104,6 +107,15 @@ public class HomePage {
     public AccountDeletedPage clickDeleteAccount() {
         wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
         return new AccountDeletedPage(driver);
+    }
+
+    /**
+     * Clicks the 'Logout' link.
+     * @return A new instance of the SignupLoginPage.
+     */
+    public SignupLoginPage clickLogout() {
+        wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
+        return new SignupLoginPage(driver);
     }
 
     public String getTitle() {
