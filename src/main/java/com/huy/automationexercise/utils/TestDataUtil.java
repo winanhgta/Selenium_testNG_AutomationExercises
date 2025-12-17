@@ -21,4 +21,12 @@ public class TestDataUtil {
                 faker.phoneNumber().cellPhone()
         );
     }
+
+    public static UserData generateUnexistUser() {
+        return new UserData(
+                faker.internet().emailAddress(),
+                faker.internet().password(6, 12)
+        );
+    }
+
 }

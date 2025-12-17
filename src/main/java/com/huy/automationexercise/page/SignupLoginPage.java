@@ -49,4 +49,8 @@ public class SignupLoginPage {
         driver.findElement(signupButton).click();
         return new RegisterPage(driver);
     }
+
+    public boolean isLoginFormDisplayed() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(loginEmailField)).isDisplayed();
+    }
 }

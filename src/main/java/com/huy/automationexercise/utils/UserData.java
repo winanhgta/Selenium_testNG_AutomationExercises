@@ -32,6 +32,12 @@ public class UserData {
         this.mobileNumber = mobileNumber;
     }
 
+    public UserData(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+
     // --- Getters ---
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }

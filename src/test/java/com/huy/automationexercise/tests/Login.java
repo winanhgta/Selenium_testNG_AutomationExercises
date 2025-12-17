@@ -1,8 +1,10 @@
 package com.huy.automationexercise.tests;
 import com.huy.automationexercise.base.BaseTest;
 import com.huy.automationexercise.page.*;
+import com.huy.automationexercise.utils.TestDataUtil;
 import com.huy.automationexercise.utils.UserData;
 import com.huy.automationexercise.utils.UserFlows;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -27,5 +29,29 @@ public class Login extends BaseTest {
 
         // --- ASSERT: Verify successful login ---
         Assert.assertTrue(homePage.isLoggedInAsTextVisible(), "'Logged in as' text should be visible after logging back in.");
+
+
+    }
+
+    @Test
+    public void testLoginUnsuccessfullyWithIncorrectEmailAndPassword() {
+        UserData unexistUserData = TestDataUtil.generateUnexistUser();
+        HomePage homePage = new HomePage(driver);
+
+        // Hard Assertion: Verify that the Home Page is visible successfully
+        Assert.assertTrue(homePage.isFeaturesItemsVisible(), "Home page should be visible.");
+
+        // Navigate to login page
+        SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
+
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div[1]/div/h2")).isDisplayed(), "Login form should be displayed.");
+
+//        Assert.assertTrue(signupLoginPage.isLoginFormDisplayed(), "Login form should be displayed.");
+
+        signupLoginPage.login(unexistUserData.getEmail(), unexistUserData.getPassword());
+
+        Assert.assertTrue(driver.findElement(By.xpath("/html/body/section/div/div/div[1]/div/form/p")).isDisplayed(), "Error message should be displayed.");
+
+        driver.quit();
     }
 }
