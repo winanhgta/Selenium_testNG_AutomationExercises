@@ -1,4 +1,4 @@
-package com.huy.automationexercise.base;
+package com.huy.automationexercise.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -19,8 +19,6 @@ public class DriverFactory {
         }
         return driver;
     }
-
-
 
     // Mở website
     public static void launchWebsite(String url) {
