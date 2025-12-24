@@ -1,5 +1,6 @@
 package com.huy.automationexercise.common;
 
+import com.huy.automationexercise.constants.FrameworkConstants;
 import com.huy.automationexercise.driver.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
@@ -25,6 +26,7 @@ public class BaseTest {
             DriverManager.setDriver(driver);
 
             // 3. Cấu hình cơ bản sau khi mở trình duyệt
+            DriverManager.getDriver().get(FrameworkConstants.URL);
             DriverManager.getDriver().manage().window().maximize();
         }
 

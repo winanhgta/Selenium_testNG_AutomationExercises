@@ -1,64 +1,22 @@
-//package com.huy.automationexercise.page;
-//import org.openqa.selenium.By;
-//import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.support.FindBy;
-//import org.openqa.selenium.support.PageFactory;
-//import org.openqa.selenium.support.ui.WebDriverWait;
-//import org.openqa.selenium.support.ui.ExpectedConditions;
-//import java.time.Duration;
-//public class HomePage {
-//    private WebDriver driver;
-//    private WebDriverWait wait;
-//
-//    @FindBy(xpath = "//a[contains(text(),'Logged in as')]")
-//    private WebElement loggedInAsText;
-//
-//    private By signupLoginLink = By.xpath("//a[contains(@href,'/login')]");
-//
-////    public HomePage(WebDriver driver) {
-////        this.driver = driver;
-////        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-////    }
-//
-//    public HomePage(WebDriver driver) {
-//        this.driver = driver;
-//        PageFactory.initElements(driver, this);
-//    }
-//
-//    public SignupLoginPage clickSignupLogin() {
-//        wait.until(ExpectedConditions.elementToBeClickable(signupLoginLink)).click();
-//        return new SignupLoginPage(driver);
-//    }
-//
-//    public String getTitle() {
-//        return driver.getTitle();
-//    }
-//
-//    public boolean isLoggedInAs(String expectedName) {
-//        return loggedInAsText.getText().contains(expectedName);
-//    }
-//}
-
 package com.huy.automationexercise.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.huy.automationexercise.driver.DriverManager;
 
 import java.time.Duration;
 
 public class HomePage {
-    private WebDriver driver;
     private WebDriverWait wait;
 
     @FindBy(xpath = "//a[contains(text(),'Logged in as')]")
     private WebElement loggedInAsText;
 
-    // đổi sang WebElement để dùng với PageFactory + ExpectedConditions
     @FindBy(xpath = "//a[contains(@href,'/login')]")
     private WebElement signupLoginLink;
 
@@ -72,15 +30,21 @@ public class HomePage {
     @FindBy(className = "features_items")
     private WebElement featuresItemsSection;
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
+    @FindBy(xpath = "//img[@alt='Website for automation practice']")
+    private WebElement logo;
+
+
+    // Sửa Constructor: Tự lấy driver từ DriverManager
+    public HomePage() {
+        // Khởi tạo PageFactory để kích hoạt các @FindBy
+        PageFactory.initElements(DriverManager.getDriver(), this);
+        // Khởi tạo wait để tránh lỗi NullPointerException
+        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
 
     public SignupLoginPage clickSignupLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(signupLoginLink)).click();
-        return new SignupLoginPage(driver);
+        return new SignupLoginPage();
     }
 
     /**
@@ -104,10 +68,10 @@ public class HomePage {
      * Clicks the 'Delete Account' link and navigates to the confirmation page.
      * @return A new instance of the AccountDeletedPage.
      */
-    public AccountDeletedPage clickDeleteAccount() {
-        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
-        return new AccountDeletedPage(driver);
-    }
+//    public AccountDeletedPage clickDeleteAccount() {
+//        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
+//        return new AccountDeletedPage(DriverManager.getDriver());
+//    }
 
     /**
      * Clicks the 'Logout' link.
@@ -115,11 +79,19 @@ public class HomePage {
      */
     public SignupLoginPage clickLogout() {
         wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
-        return new SignupLoginPage(driver);
+        return new SignupLoginPage();
     }
 
     public String getTitle() {
-        return driver.getTitle();
+        return DriverManager.getDriver().getTitle();
+    }
+
+    public boolean isPageVisible(){
+        try{
+            return wait.until(ExpectedConditions.visibilityOf(logo)).isDisplayed();
+        } catch (Exception e){
+            return false;
+        }
     }
 
     public boolean isLoggedInAs(String expectedName) {

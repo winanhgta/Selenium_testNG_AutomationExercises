@@ -2,20 +2,17 @@ package com.huy.automationexercise.tests;
 import com.huy.automationexercise.common.BaseTest;
 import com.huy.automationexercise.driver.*;
 import com.huy.automationexercise.page.*;
-import com.huy.automationexercise.utils.TestDataUtil;
-import com.huy.automationexercise.utils.UserData;
-import com.huy.automationexercise.utils.UserFlows;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Login {//extends BaseTest {
-    @Test
-    public void testLoginSuccessfullyWithCorrectUserAndPassword() throws InterruptedException {
 
+public class Login extends BaseTest {
+    @Test
+    public void testLoginSuccessfullyWithCorrectUserAndPassword() {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Trang chưa hiển thị được");
+        SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
+        Assert.assertTrue(signupLoginPage.isSignupFormDisplayed(), "New user signup text is not visible");
     }
 
 //    @Test

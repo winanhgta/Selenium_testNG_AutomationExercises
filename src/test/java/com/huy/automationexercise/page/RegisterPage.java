@@ -134,8 +134,8 @@ public class RegisterPage {
         mobileNumberInput.sendKeys(mobile);
     }
 
-    public AccountCreatedPage clickCreateAccount() {
-        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
-        return new AccountCreatedPage(driver); // This now correctly returns the next page
-    }
+//    public AccountCreatedPage clickCreateAccount() {
+//        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
+//        return new AccountCreatedPage(driver); // This now correctly returns the next page
+//    }
 }

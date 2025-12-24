@@ -7,5 +7,6 @@ public class FrameworkConstants {
     // Nếu để true: trình duyệt chạy ngầm. Nếu để false: trình duyệt mở lên bình thường.
     public static final String HEADLESS = "false";
     public static final String BROWSER = "CHROME";
+    public static final String URL = "https://automationexercise.com/";
 
 }
