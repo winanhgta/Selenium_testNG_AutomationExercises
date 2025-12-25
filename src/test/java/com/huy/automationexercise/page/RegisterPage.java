@@ -1,17 +1,23 @@
 package com.huy.automationexercise.page;
 
-import org.openqa.selenium.WebDriver;
+import com.huy.automationexercise.driver.DriverManager;
+import com.huy.automationexercise.utils.UserData;
+import net.datafaker.Faker;
+import net.datafaker.providers.base.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 public class RegisterPage {
-    private WebDriver driver;
     private WebDriverWait wait;
+
+    @FindBy(xpath = "//h2/b[text()='Enter Account Information']")
+    private WebElement accountInformationTitle;
 
     // --- Title ---
     @FindBy(id = "id_gender1")
@@ -62,7 +68,7 @@ public class RegisterPage {
     @FindBy(id = "address2")
     private WebElement address2Input;
 
-    @FindBy(id = "country")
+    @FindBy(xpath = "//select[@data-qa='days']")
     private WebElement countryDropdown;
 
     @FindBy(id = "state")
@@ -82,17 +88,18 @@ public class RegisterPage {
     private WebElement createAccountButton;
 
     // --- Constructor ---
-    public RegisterPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
+    public RegisterPage() {
+        // Khởi tạo PageFactory để kích hoạt các @FindBy
+        PageFactory.initElements(DriverManager.getDriver(), this);
+        // Khởi tạo wait để tránh lỗi NullPointerException
+        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
 
     // --- Verification ---
     public boolean isAccountInformationTitleVisible() {
         // Check for the visibility of a stable element on the page, like the password field.
         // This confirms we are on the correct page.
-        return wait.until(ExpectedConditions.visibilityOf(passwordInput)).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOf(accountInformationTitle)).isDisplayed();
     }
 
     // --- Actions ---
@@ -105,13 +112,23 @@ public class RegisterPage {
         }
     }
 
-    public void enterAccountInfo(String name, String password, String day, String month, String year) {
+    public void enterAccountInfo(UserData user) {
+        wait.until(ExpectedConditions.elementToBeClickable(mrRadio));
+        Faker faker = new Faker();
+        if (faker.number().numberBetween(0, 1) == 0) {
+            mrRadio.click(); // Nếu là 0 thì chọn Mr.
+        } else {
+            mrsRadio.click(); // Nếu là 1 thì chọn Mrs.
+        }
         nameInput.clear();
-        nameInput.sendKeys(name);
-        passwordInput.sendKeys(password);
-        dayDropdown.sendKeys(day);       // hoặc dùng Select class
-        monthDropdown.sendKeys(month);
-        yearDropdown.sendKeys(year);
+        nameInput.sendKeys(user.getFirstName()+" "+user.getLastName());
+        passwordInput.sendKeys(user.getPassword());
+        Select selectDay = new Select(dayDropdown);
+        Select selectMonth = new Select(monthDropdown);
+        Select selectYear = new Select(yearDropdown);
+        selectDay.selectByVisibleText(user.getDay());
+        selectMonth.selectByVisibleText(user.getMonth());
+        selectYear.selectByVisibleText(user.getYear());
     }
 
     public void selectCheckboxes() {
@@ -119,19 +136,19 @@ public class RegisterPage {
         specialOffersCheckbox.click();
     }
 
-    public void enterAddressInfo(String firstName, String lastName, String company, String address1,
-                                 String address2, String country, String state, String city,
-                                 String zipcode, String mobile) {
-        firstNameInput.sendKeys(firstName);
-        lastNameInput.sendKeys(lastName);
-        companyInput.sendKeys(company);
-        address1Input.sendKeys(address1);
-        address2Input.sendKeys(address2);
-        countryDropdown.sendKeys(country);
-        stateInput.sendKeys(state);
-        cityInput.sendKeys(city);
-        zipcodeInput.sendKeys(zipcode);
-        mobileNumberInput.sendKeys(mobile);
+    public void enterAddressInfo(UserData user) {
+        firstNameInput.sendKeys(user.getFirstName());
+        lastNameInput.sendKeys(user.getLastName());
+        companyInput.sendKeys(user.getCompany());
+        address1Input.sendKeys(user.getAddress1());
+        address2Input.sendKeys(user.getAddress2());
+        Select select = new Select(countryDropdown);
+        System.out.println("Country: ." + user.getCountry() + ".");
+        select.selectByValue(user.getCountry());
+        stateInput.sendKeys(user.getState());
+        cityInput.sendKeys(user.getCity());
+        zipcodeInput.sendKeys(user.getZipCode());
+        mobileNumberInput.sendKeys(user.getMobileNumber());
     }
 
 //    public AccountCreatedPage clickCreateAccount() {

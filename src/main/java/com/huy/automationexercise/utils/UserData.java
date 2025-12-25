@@ -1,8 +1,15 @@
 package com.huy.automationexercise.utils;
 
+import net.datafaker.providers.base.Gender;
+
+import java.util.Date;
+
 public class UserData {
     private String firstName;
     private String lastName;
+    private String day;
+    private String month;
+    private String year;
     private String email;
     private String password;
     private String company;
@@ -15,11 +22,14 @@ public class UserData {
     private String mobileNumber;
 
     // --- Constructor ---
-    public UserData(String firstName, String lastName, String email, String password,
+    public UserData(String firstName, String lastName, String day, String month, String year, String email, String password,
                     String company, String address1, String address2, String country,
                     String state, String city, String zipCode, String mobileNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.day = day;
+        this.month = month;
+        this.year = year;
         this.email = email;
         this.password = password;
         this.company = company;
@@ -50,5 +60,8 @@ public class UserData {
     public String getState() { return state; }
     public String getCity() { return city; }
     public String getZipCode() { return zipCode; }
+    public String getDay() {return day;}
+    public String getMonth() {return month;}
+    public String getYear() {return year;}
     public String getMobileNumber() { return mobileNumber; }
 }

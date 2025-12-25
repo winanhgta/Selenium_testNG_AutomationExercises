@@ -69,7 +69,7 @@ public class SignupLoginPage {
         wait.until(ExpectedConditions.visibilityOf(nameField)).sendKeys(name);
         emailField.sendKeys(email);
         signupButton.click();
-        return new RegisterPage(DriverManager.getDriver());
+        return new RegisterPage();
     }
 
     public boolean isLoginFormDisplayed() {

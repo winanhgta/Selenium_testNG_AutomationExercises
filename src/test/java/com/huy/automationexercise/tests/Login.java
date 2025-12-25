@@ -2,6 +2,8 @@ package com.huy.automationexercise.tests;
 import com.huy.automationexercise.common.BaseTest;
 import com.huy.automationexercise.driver.*;
 import com.huy.automationexercise.page.*;
+import com.huy.automationexercise.utils.TestDataUtil;
+import com.huy.automationexercise.utils.UserData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,6 +15,13 @@ public class Login extends BaseTest {
         Assert.assertTrue(homePage.isPageVisible(), "Trang chưa hiển thị được");
         SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
         Assert.assertTrue(signupLoginPage.isSignupFormDisplayed(), "New user signup text is not visible");
+        UserData user = TestDataUtil.generateUser();
+        RegisterPage registerPage = signupLoginPage.signup(user.getFirstName()+" "+user.getLastName(), user.getEmail());
+        Assert.assertTrue(registerPage.isAccountInformationTitleVisible(), "Account information title is not visible");
+        registerPage.enterAccountInfo(user);
+        registerPage.selectCheckboxes();
+        registerPage.enterAddressInfo(user);
+
     }
 
 //    @Test
