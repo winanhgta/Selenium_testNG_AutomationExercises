@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class RegisterPage {
@@ -68,7 +67,7 @@ public class RegisterPage {
     @FindBy(id = "address2")
     private WebElement address2Input;
 
-    @FindBy(xpath = "//select[@data-qa='days']")
+    @FindBy(xpath = "//select[@data-qa='country']")
     private WebElement countryDropdown;
 
     @FindBy(id = "state")
@@ -137,22 +136,22 @@ public class RegisterPage {
     }
 
     public void enterAddressInfo(UserData user) {
+        wait.until(ExpectedConditions.visibilityOf(firstNameInput));
         firstNameInput.sendKeys(user.getFirstName());
         lastNameInput.sendKeys(user.getLastName());
         companyInput.sendKeys(user.getCompany());
         address1Input.sendKeys(user.getAddress1());
         address2Input.sendKeys(user.getAddress2());
         Select select = new Select(countryDropdown);
-        System.out.println("Country: ." + user.getCountry() + ".");
-        select.selectByValue(user.getCountry());
+        select.selectByValue(user.getCountry().trim());
         stateInput.sendKeys(user.getState());
         cityInput.sendKeys(user.getCity());
         zipcodeInput.sendKeys(user.getZipCode());
         mobileNumberInput.sendKeys(user.getMobileNumber());
     }
 
-//    public AccountCreatedPage clickCreateAccount() {
-//        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
-//        return new AccountCreatedPage(driver); // This now correctly returns the next page
-//    }
+    public AccountCreatedPage clickCreateAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
+        return new AccountCreatedPage(); // This now correctly returns the next page
+    }
 }

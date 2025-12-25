@@ -14,13 +14,13 @@ import java.time.Duration;
 public class HomePage {
     private WebDriverWait wait;
 
-    @FindBy(xpath = "//a[contains(text(),'Logged in as')]")
+    @FindBy(xpath = "//a[contains(.,'Logged in as')]")
     private WebElement loggedInAsText;
 
     @FindBy(xpath = "//a[contains(@href,'/login')]")
     private WebElement signupLoginLink;
 
-    @FindBy(xpath = "//a[contains(@href, '/delete_account')]")
+    @FindBy(xpath = "//a[contains(text(),' Delete Account')]")
     private WebElement deleteAccountLink;
 
     @FindBy(xpath = "//a[contains(@href, '/logout')]")
@@ -47,36 +47,17 @@ public class HomePage {
         return new SignupLoginPage();
     }
 
-    /**
-     * Verifies that the home page is visible by checking for the "Features Items" section.
-     * @return true if the section is visible, false otherwise.
-     */
+
     public boolean isFeaturesItemsVisible() {
         return wait.until(ExpectedConditions.visibilityOf(featuresItemsSection)).isDisplayed();
     }
 
-    /**
-     * Verifies that the 'Logged in as' text is visible on the page.
-     * @return true if the text element is visible, false otherwise.
-     */
+
     public boolean isLoggedInAsTextVisible() {
         // Wait for the element to be visible and then check its display status
         return wait.until(ExpectedConditions.visibilityOf(loggedInAsText)).isDisplayed();
     }
 
-    /**
-     * Clicks the 'Delete Account' link and navigates to the confirmation page.
-     * @return A new instance of the AccountDeletedPage.
-     */
-//    public AccountDeletedPage clickDeleteAccount() {
-//        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
-//        return new AccountDeletedPage(DriverManager.getDriver());
-//    }
-
-    /**
-     * Clicks the 'Logout' link.
-     * @return A new instance of the SignupLoginPage.
-     */
     public SignupLoginPage clickLogout() {
         wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
         return new SignupLoginPage();
@@ -95,7 +76,12 @@ public class HomePage {
     }
 
     public boolean isLoggedInAs(String expectedName) {
-        // thêm check null-safe
-        return loggedInAsText != null && loggedInAsText.getText().contains(expectedName);
+        System.out.println("Actual text: "+loggedInAsText.getText());
+        return loggedInAsText != null && loggedInAsText.getText().equals("Logged in as " + expectedName);
+    }
+
+    public AccountDeletedPage clickDeleteAccount(){
+        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
+        return new AccountDeletedPage();
     }
 }
