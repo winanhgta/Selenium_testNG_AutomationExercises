@@ -1,5 +1,6 @@
 package com.huy.automationexercise.page;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,15 +43,16 @@ public class HomePage {
         this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
 
+    @Step("Click and navigate to Sign up/login page")
     public SignupLoginPage clickSignupLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(signupLoginLink)).click();
         return new SignupLoginPage();
     }
 
-
-    public boolean isFeaturesItemsVisible() {
-        return wait.until(ExpectedConditions.visibilityOf(featuresItemsSection)).isDisplayed();
-    }
+//    @Step("")
+//    public boolean isFeaturesItemsVisible() {
+//        return wait.until(ExpectedConditions.visibilityOf(featuresItemsSection)).isDisplayed();
+//    }
 
 
     public boolean isLoggedInAsTextVisible() {
@@ -58,15 +60,11 @@ public class HomePage {
         return wait.until(ExpectedConditions.visibilityOf(loggedInAsText)).isDisplayed();
     }
 
-    public SignupLoginPage clickLogout() {
-        wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
-        return new SignupLoginPage();
-    }
-
     public String getTitle() {
         return DriverManager.getDriver().getTitle();
     }
 
+    @Step("Verify the page is visible")
     public boolean isPageVisible(){
         try{
             return wait.until(ExpectedConditions.visibilityOf(logo)).isDisplayed();
@@ -75,13 +73,21 @@ public class HomePage {
         }
     }
 
+    @Step("Verify the user is logged in as {expectedName}")
     public boolean isLoggedInAs(String expectedName) {
         System.out.println("Actual text: "+loggedInAsText.getText());
         return loggedInAsText != null && loggedInAsText.getText().equals("Logged in as " + expectedName);
     }
 
+    @Step("Click and navigate to Delete Account page")
     public AccountDeletedPage clickDeleteAccount(){
         wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
         return new AccountDeletedPage();
+    }
+
+    @Step("Click logout and navigate to sign up/login page")
+    public SignupLoginPage clickLogout(){
+        wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
+        return new SignupLoginPage();
     }
 }

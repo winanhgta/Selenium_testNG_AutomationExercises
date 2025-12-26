@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite">
+
+    <listeners>
+        <listener class-name="com.huy.automationexercise.TestListener.TestListener"/>
+    </listeners>
+
+    <test name="Account Life Cycle Tests">
+        <classes>
+            <class name="com.huy.automationexercise.tests.AccountLifeCycle"/>
+        </classes>
+    </test>
+</suite>

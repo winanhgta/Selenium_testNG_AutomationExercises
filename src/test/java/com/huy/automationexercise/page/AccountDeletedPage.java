@@ -1,5 +1,6 @@
 package com.huy.automationexercise.page;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -26,10 +27,12 @@ public class AccountDeletedPage {
         this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
 
+    @Step("Verify that the account deleted title is visible")
     public boolean isDeletedTitleVisible(){
         return wait.until(ExpectedConditions.visibilityOf(accountDeletedTitle)).isDisplayed();
     }
 
+    @Step("Click continue button and navigate to Home page")
     public HomePage clickContinue(){
         wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
         return new HomePage();

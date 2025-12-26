@@ -2,6 +2,7 @@ package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
 import com.huy.automationexercise.utils.UserData;
+import io.qameta.allure.Step;
 import net.datafaker.Faker;
 import net.datafaker.providers.base.*;
 import org.openqa.selenium.WebElement;
@@ -94,23 +95,12 @@ public class RegisterPage {
         this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
 
-    // --- Verification ---
+    @Step("Verify that the account information title is visible")
     public boolean isAccountInformationTitleVisible() {
-        // Check for the visibility of a stable element on the page, like the password field.
-        // This confirms we are on the correct page.
         return wait.until(ExpectedConditions.visibilityOf(accountInformationTitle)).isDisplayed();
     }
 
-    // --- Actions ---
-    public void selectTitle(String title) {
-        wait.until(ExpectedConditions.elementToBeClickable(mrRadio));
-        if (title.equalsIgnoreCase("Mr")) {
-            mrRadio.click();
-        } else {
-            mrsRadio.click();
-        }
-    }
-
+    @Step("Enter account information")
     public void enterAccountInfo(UserData user) {
         wait.until(ExpectedConditions.elementToBeClickable(mrRadio));
         Faker faker = new Faker();
@@ -130,11 +120,13 @@ public class RegisterPage {
         selectYear.selectByVisibleText(user.getYear());
     }
 
+    @Step("Select 2 checkboxes")
     public void selectCheckboxes() {
         newsletterCheckbox.click();
         specialOffersCheckbox.click();
     }
 
+    @Step("Enter address information")
     public void enterAddressInfo(UserData user) {
         wait.until(ExpectedConditions.visibilityOf(firstNameInput));
         firstNameInput.sendKeys(user.getFirstName());
@@ -150,6 +142,7 @@ public class RegisterPage {
         mobileNumberInput.sendKeys(user.getMobileNumber());
     }
 
+    @Step("Click and navigate to Account Created page")
     public AccountCreatedPage clickCreateAccount() {
         wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
         return new AccountCreatedPage(); // This now correctly returns the next page
