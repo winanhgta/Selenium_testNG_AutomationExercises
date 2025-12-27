@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Objects;
 
-// TODO: Implement BasePage functions
 public class SignupLoginPage extends BasePage {
 
     // --- Signup Form ---
@@ -91,12 +90,12 @@ public class SignupLoginPage extends BasePage {
 
     @Step("Verify that login to your account text is visible")
     public boolean isLoginToYourAccountVisible(){
-        return wait.until(ExpectedConditions.visibilityOf(loginToYourAccountTitle)).isDisplayed();
+        return isDisplayed(loginToYourAccountTitle);
     }
 
     @Step("Verify that incorrect email or password notification is visible")
     public boolean isIncorrectEmailPasswordVisible(){
-        return wait.until(ExpectedConditions.visibilityOf(incorrectEmailPasswordNoti)).isDisplayed();
+        return isDisplayed(incorrectEmailPasswordNoti);
     }
 
     @Step("Verify that user is currently navigated to signup/login page")
@@ -106,13 +105,13 @@ public class SignupLoginPage extends BasePage {
 
     @Step("Navigate to home page")
     public HomePage clickLogo(){
-        wait.until(ExpectedConditions.elementToBeClickable(logo)).click();
+        clickToElement(logo);
         return new HomePage();
     }
 
     @Step("Verify that email is existing notification is visible")
     public boolean isEmailExistNotiVisible(){
-        return wait.until(ExpectedConditions.visibilityOf(emailExistNoti)).isDisplayed();
+        return isDisplayed(emailExistNoti);
     }
 
 }
