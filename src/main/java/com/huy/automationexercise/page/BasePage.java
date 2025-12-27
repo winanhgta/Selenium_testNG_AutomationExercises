@@ -27,4 +27,8 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(element)).clear();
         element.sendKeys(value);
     }
+
+    protected boolean isDisplayed(WebElement element){
+        return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+    }
 }
