@@ -26,6 +26,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//img[@alt='Website for automation practice']")
     private WebElement logo;
 
+    @FindBy(xpath = "//a[text()=' Contact us']")
+    private WebElement contactUsLink;
+
 
     // Sửa Constructor: Tự lấy driver từ DriverManager
     public HomePage() {
@@ -63,5 +66,11 @@ public class HomePage extends BasePage {
     public SignupLoginPage clickLogout(){
         clickToElement(logoutLink);
         return new SignupLoginPage();
+    }
+
+    @Step("Click Contact us and navigate to contact us page")
+    public ContactUsPage clickContactUs(){
+        clickToElement(contactUsLink);
+        return new ContactUsPage();
     }
 }

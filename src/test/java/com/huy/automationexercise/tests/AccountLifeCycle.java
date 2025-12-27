@@ -76,7 +76,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
-    public void testLogoutUser() throws InterruptedException {
+    public void testLogoutUser(){
         HomePage homePage = new HomePage();
 
         //Create account first
@@ -120,6 +120,12 @@ public class AccountLifeCycle extends BaseTest {
         signupLoginPage = homePage.clickSignupLogin();
         signupLoginPage.signup(user.getFirstName()+" "+user.getLastName(), user.getEmail());
         Assert.assertTrue(signupLoginPage.isEmailExistNotiVisible(), "Email is existing notification is not visible");
+    }
+
+    @Test
+    public void testContactUsForm(){
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
     }
 
 }
