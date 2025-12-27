@@ -2,19 +2,14 @@ package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import com.huy.automationexercise.driver.DriverManager;
 
-import java.time.Duration;
+import java.util.Objects;
 
-public class SignupLoginPage {
-
-    private final WebDriverWait wait;
+// TODO: Implement BasePage functions
+public class SignupLoginPage extends BasePage {
 
     // --- Signup Form ---
     @FindBy(name = "name")
@@ -56,25 +51,22 @@ public class SignupLoginPage {
     // --- Constructor ---
 
     public SignupLoginPage() {
-        // Khởi tạo PageFactory để kích hoạt các @FindBy
-        PageFactory.initElements(DriverManager.getDriver(), this);
-        // Khởi tạo wait để tránh lỗi NullPointerException
-        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        super();
     }
 
     @Step("Login with correct {email} and {password} and navigate to Home page")
     public HomePage login(String email, String password) {
-        wait.until(ExpectedConditions.visibilityOf(loginEmailField)).sendKeys(email);
-        loginPasswordField.sendKeys(password);
-        loginButton.click();
+        sendKeysToElement(loginEmailField, email);
+        sendKeysToElement(loginPasswordField, password);
+        clickToElement(loginButton);
         return new HomePage();
     }
 
     @Step("Login with incorrect {email} and {password} and navigate to Home page")
     public void loginExpectingError(String email, String password) {
-        wait.until(ExpectedConditions.visibilityOf(loginEmailField)).sendKeys(email);
-        loginPasswordField.sendKeys(password);
-        loginButton.click();
+        sendKeysToElement(loginEmailField, email);
+        sendKeysToElement(loginPasswordField, password);
+        clickToElement(loginButton);
     }
 
     @Step("Verify that the signup form is displayed")
@@ -84,17 +76,17 @@ public class SignupLoginPage {
 
     @Step("Signup with {name} and {email} and navigate to Register page")
     public RegisterPage signup(String name, String email) {
-        wait.until(ExpectedConditions.visibilityOf(nameField)).sendKeys(name);
-        emailField.sendKeys(email);
-        signupButton.click();
+        sendKeysToElement(nameField, name);
+        sendKeysToElement(emailField, email);
+        clickToElement(signupButton);
         return new RegisterPage();
     }
 
     @Step("Signup with {name} and existing {email} and display error message")
     public void signupWithExistingEmail(String name, String email) {
-        wait.until(ExpectedConditions.visibilityOf(nameField)).sendKeys(name);
-        emailField.sendKeys(email);
-        signupButton.click();
+        sendKeysToElement(nameField, name);
+        sendKeysToElement(emailField, email);
+        clickToElement(signupButton);
     }
 
     @Step("Verify that login to your account text is visible")
@@ -109,7 +101,7 @@ public class SignupLoginPage {
 
     @Step("Verify that user is currently navigated to signup/login page")
     public boolean isSignUpLoginPageVisible(){
-        return DriverManager.getDriver().getTitle().equals("Automation Exercise - Signup / Login");
+        return Objects.equals(DriverManager.getDriver().getTitle(), "Automation Exercise - Signup / Login");
     }
 
     @Step("Navigate to home page")
