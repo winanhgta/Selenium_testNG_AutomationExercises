@@ -38,11 +38,6 @@ public class HomePage extends BasePage {
         return new SignupLoginPage();
     }
 
-    public boolean isLoggedInAsTextVisible() {
-        // Wait for the element to be visible and then check its display status
-        return wait.until(ExpectedConditions.visibilityOf(loggedInAsText)).isDisplayed();
-    }
-
     @Step("Verify home page is visible")
     public boolean isPageVisible(){
         try{
