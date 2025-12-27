@@ -1,19 +1,11 @@
 package com.huy.automationexercise.page;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import com.huy.automationexercise.driver.DriverManager;
 
-import java.time.Duration;
-
-public class HomePage {
-    private WebDriverWait wait;
+public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[contains(.,'Logged in as')]")
     private WebElement loggedInAsText;
@@ -37,34 +29,21 @@ public class HomePage {
 
     // Sửa Constructor: Tự lấy driver từ DriverManager
     public HomePage() {
-        // Khởi tạo PageFactory để kích hoạt các @FindBy
-        PageFactory.initElements(DriverManager.getDriver(), this);
-        // Khởi tạo wait để tránh lỗi NullPointerException
-        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        super();
     }
 
     @Step("Click and navigate to Sign up/login page")
     public SignupLoginPage clickSignupLogin() {
-        wait.until(ExpectedConditions.elementToBeClickable(signupLoginLink)).click();
+        clickToElement(signupLoginLink);
         return new SignupLoginPage();
     }
-
-//    @Step("")
-//    public boolean isFeaturesItemsVisible() {
-//        return wait.until(ExpectedConditions.visibilityOf(featuresItemsSection)).isDisplayed();
-//    }
-
 
     public boolean isLoggedInAsTextVisible() {
         // Wait for the element to be visible and then check its display status
         return wait.until(ExpectedConditions.visibilityOf(loggedInAsText)).isDisplayed();
     }
 
-    public String getTitle() {
-        return DriverManager.getDriver().getTitle();
-    }
-
-    @Step("Verify the page is visible")
+    @Step("Verify home page is visible")
     public boolean isPageVisible(){
         try{
             return wait.until(ExpectedConditions.visibilityOf(logo)).isDisplayed();
@@ -73,7 +52,7 @@ public class HomePage {
         }
     }
 
-    @Step("Verify the user is logged in as {expectedName}")
+    @Step("Verify that user is logged in as {expectedName}")
     public boolean isLoggedInAs(String expectedName) {
         System.out.println("Actual text: "+loggedInAsText.getText());
         return loggedInAsText != null && loggedInAsText.getText().equals("Logged in as " + expectedName);
@@ -81,13 +60,13 @@ public class HomePage {
 
     @Step("Click and navigate to Delete Account page")
     public AccountDeletedPage clickDeleteAccount(){
-        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
+        clickToElement(deleteAccountLink);
         return new AccountDeletedPage();
     }
 
     @Step("Click logout and navigate to sign up/login page")
     public SignupLoginPage clickLogout(){
-        wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
+        clickToElement(logoutLink);
         return new SignupLoginPage();
     }
 }
