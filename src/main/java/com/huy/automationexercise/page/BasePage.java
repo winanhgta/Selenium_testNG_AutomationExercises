@@ -32,4 +32,8 @@ public class BasePage {
     protected boolean isDisplayed(WebElement element){
         return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
+
+    protected void uploadFile(WebElement element, String filePath) {
+        element.sendKeys(filePath);
+    }
 }
