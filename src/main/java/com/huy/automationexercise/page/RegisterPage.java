@@ -12,8 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 // TODO: Implement BasePage functions
-public class RegisterPage {
-    private WebDriverWait wait;
+public class RegisterPage extends BasePage {
 
     @FindBy(xpath = "//h2/b[text()='Enter Account Information']")
     private WebElement accountInformationTitle;
@@ -88,10 +87,7 @@ public class RegisterPage {
 
     // --- Constructor ---
     public RegisterPage() {
-        // Khởi tạo PageFactory để kích hoạt các @FindBy
-        PageFactory.initElements(DriverManager.getDriver(), this);
-        // Khởi tạo wait để tránh lỗi NullPointerException
-        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        super();
     }
 
     @Step("Verify that the account information title is visible")
@@ -101,16 +97,14 @@ public class RegisterPage {
 
     @Step("Enter account information")
     public void enterAccountInfo(UserData user) {
-        wait.until(ExpectedConditions.elementToBeClickable(mrRadio));
         Faker faker = new Faker();
         if (faker.number().numberBetween(0, 1) == 0) {
-            mrRadio.click(); // Nếu là 0 thì chọn Mr.
+            clickToElement(mrRadio);
         } else {
-            mrsRadio.click(); // Nếu là 1 thì chọn Mrs.
+            clickToElement(mrsRadio);
         }
-        nameInput.clear();
-        nameInput.sendKeys(user.getFirstName()+" "+user.getLastName());
-        passwordInput.sendKeys(user.getPassword());
+        sendKeysToElement(nameInput,user.getFirstName()+" "+user.getLastName());
+        sendKeysToElement(passwordInput, user.getPassword());
         Select selectDay = new Select(dayDropdown);
         Select selectMonth = new Select(monthDropdown);
         Select selectYear = new Select(yearDropdown);
@@ -121,29 +115,30 @@ public class RegisterPage {
 
     @Step("Select 2 checkboxes")
     public void selectCheckboxes() {
-        newsletterCheckbox.click();
-        specialOffersCheckbox.click();
+        clickToElement(newsletterCheckbox);
+        clickToElement(specialOffersCheckbox);
     }
 
     @Step("Enter address information")
     public void enterAddressInfo(UserData user) {
-        wait.until(ExpectedConditions.visibilityOf(firstNameInput));
-        firstNameInput.sendKeys(user.getFirstName());
-        lastNameInput.sendKeys(user.getLastName());
-        companyInput.sendKeys(user.getCompany());
-        address1Input.sendKeys(user.getAddress1());
-        address2Input.sendKeys(user.getAddress2());
+        sendKeysToElement(firstNameInput, user.getFirstName());
+        sendKeysToElement(lastNameInput, user.getLastName());
+        sendKeysToElement(companyInput, user.getCompany());
+        sendKeysToElement(address1Input, user.getAddress1());
+        sendKeysToElement(address2Input, user.getAddress2());
+
         Select select = new Select(countryDropdown);
         select.selectByValue(user.getCountry().trim());
-        stateInput.sendKeys(user.getState());
-        cityInput.sendKeys(user.getCity());
-        zipcodeInput.sendKeys(user.getZipCode());
-        mobileNumberInput.sendKeys(user.getMobileNumber());
+
+        sendKeysToElement(stateInput, user.getState());
+        sendKeysToElement(cityInput, user.getCity());
+        sendKeysToElement(zipcodeInput, user.getZipCode());
+        sendKeysToElement(mobileNumberInput, user.getMobileNumber());
     }
 
     @Step("Click and navigate to Account Created page")
     public AccountCreatedPage clickCreateAccount() {
-        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
+        clickToElement(createAccountButton);
         return new AccountCreatedPage(); // This now correctly returns the next page
     }
 }
