@@ -3,15 +3,8 @@ package com.huy.automationexercise.page;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import com.huy.automationexercise.driver.DriverManager;
 
-import java.time.Duration;
-// TODO: Implement BasePage functions
-public class AccountDeletedPage {
-    private WebDriverWait wait;
+public class AccountDeletedPage extends BasePage {
 
     @FindBy(xpath = "//b[text()='Account Deleted!']")
     private WebElement accountDeletedTitle;
@@ -21,20 +14,17 @@ public class AccountDeletedPage {
 
     // --- Constructor ---
     public AccountDeletedPage() {
-        // Khởi tạo PageFactory để kích hoạt các @FindBy
-        PageFactory.initElements(DriverManager.getDriver(), this);
-        // Khởi tạo wait để tránh lỗi NullPointerException
-        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        super();
     }
 
     @Step("Verify that the account deleted title is visible")
     public boolean isDeletedTitleVisible(){
-        return wait.until(ExpectedConditions.visibilityOf(accountDeletedTitle)).isDisplayed();
+        return isDisplayed(accountDeletedTitle);
     }
 
     @Step("Click continue button and navigate to Home page")
     public HomePage clickContinue(){
-        wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
+        clickToElement(continueButton);
         return new HomePage();
     }
 }
