@@ -1,5 +1,6 @@
 package com.huy.automationexercise.page;
 
+import com.huy.automationexercise.constants.FrameworkConstants;
 import com.huy.automationexercise.driver.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -14,7 +15,7 @@ public class BasePage {
     public BasePage() {
         // Init PageFactory 1 lần duy nhất cho tất cả các trang
         PageFactory.initElements(DriverManager.getDriver(), this);
-        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
     }
 
     //Method to interact with element
