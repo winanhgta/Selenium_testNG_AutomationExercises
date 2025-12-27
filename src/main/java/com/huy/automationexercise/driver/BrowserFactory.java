@@ -13,10 +13,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.lang.Boolean.TRUE;
 
 public enum BrowserFactory {

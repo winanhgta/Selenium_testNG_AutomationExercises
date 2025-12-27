@@ -2,7 +2,6 @@ package com.huy.automationexercise.tests;
 
 import com.huy.automationexercise.TestListener.TestListener;
 import com.huy.automationexercise.common.BaseTest;
-import com.huy.automationexercise.page.*;
 import com.huy.automationexercise.utils.TestDataUtil;
 import com.huy.automationexercise.utils.UserData;
 import io.qameta.allure.Epic;
@@ -11,6 +10,7 @@ import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import com.huy.automationexercise.page.*;
 
 @Listeners({TestListener.class}) // Gọi Listener để chụp ảnh khi fail
 @Epic("Regression Test")
