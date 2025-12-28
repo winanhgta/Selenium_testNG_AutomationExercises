@@ -2,6 +2,7 @@ package com.huy.automationexercise.tests;
 
 import com.huy.automationexercise.TestListener.TestListener;
 import com.huy.automationexercise.common.BaseTest;
+import com.huy.automationexercise.utils.EmailData;
 import com.huy.automationexercise.utils.TestDataUtil;
 import com.huy.automationexercise.utils.UserData;
 import io.qameta.allure.Epic;
