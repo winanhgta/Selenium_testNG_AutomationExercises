@@ -1,17 +1,13 @@
 package com.huy.automationexercise.page;
 
-import com.huy.automationexercise.driver.DriverManager;
 import com.huy.automationexercise.utils.UserData;
 import io.qameta.allure.Step;
 import net.datafaker.Faker;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
-// TODO: Implement BasePage functions
+
 public class RegisterPage extends BasePage {
 
     @FindBy(xpath = "//h2/b[text()='Enter Account Information']")
