@@ -1,8 +1,10 @@
 package com.huy.automationexercise.page;
 
+import com.huy.automationexercise.driver.DriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import java.io.File;
 
 public class ContactUsPage extends BasePage{
 
@@ -24,6 +26,14 @@ public class ContactUsPage extends BasePage{
     @FindBy(xpath = "//input[@type='file']")
     private WebElement inputFileField;
 
+    @FindBy(xpath = "//input[@type='submit']")
+    private WebElement submitButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'status')]")
+    private WebElement statusAlert;
+
+    @FindBy(xpath = "//a[contains(@class, 'btn-success') and contains(., 'Home')]")
+    private WebElement homeButton;
 
     public ContactUsPage(){
         super();
@@ -41,10 +51,15 @@ public class ContactUsPage extends BasePage{
         inputSubjectField.sendKeys(subject);
         inputMessageField.sendKeys(message);
     }
-    // TODO: Upload file testcase
+
     @Step("Upload file to contact us form")
-    public void uploadFile(String filePath){
-        uploadFile(inputFileField, filePath);
+    public void uploadFile(String fileName){
+        // Chỉ truyền tên file, còn đường dẫn thư mục chứa file thì để cố định trong framework
+        String fullPath = System.getProperty("user.dir") + File.separator + "src" +
+                File.separator + "test" + File.separator + "resources" +
+                File.separator + "testdata" + File.separator + fileName;
+
+        uploadFile(inputFileField, fullPath);
     }
 
 
