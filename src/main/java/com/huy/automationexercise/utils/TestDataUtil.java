@@ -39,5 +39,11 @@ public class TestDataUtil {
                 faker.credentials().password(6, 12)
         );
     }
+    public static EmailData emailGenerate(){
+        return new EmailData(
+                faker.lorem().sentence(7),
+                faker.lorem().paragraph(5)
+        );
+    }
 
 }
