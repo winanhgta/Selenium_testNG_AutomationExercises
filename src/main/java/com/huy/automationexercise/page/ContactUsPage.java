@@ -62,6 +62,29 @@ public class ContactUsPage extends BasePage{
         uploadFile(inputFileField, fullPath);
     }
 
+    @Step("Click submit button")
+    public void clickSubmitButton(){
+        clickToElement(submitButton);
+    }
 
+    @Step("Accept alert")
+    public void acceptAlert(){
+        try {
+            isAlertDisplayed();
+            DriverManager.getDriver().switchTo().alert().accept();
+        } catch (Exception e) {
+            throw new RuntimeException("Error: Could not accept Alert. Detail: " + e.getMessage());
+        }
+    }
 
+    @Step("Verify that success message is visible")
+    public boolean isStatusAlertVisible(){
+        return isDisplayed(statusAlert);
+    }
+
+    @Step("Click Home button and redirect to home page successfully")
+    public HomePage clickHomeButton(){
+        clickToElement(homeButton);
+        return new HomePage();
+    }
 }
