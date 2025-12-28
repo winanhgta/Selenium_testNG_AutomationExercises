@@ -124,7 +124,19 @@ public class AccountLifeCycle extends BaseTest {
 
     @Test
     public void testContactUsForm(){
+        UserData user = TestDataUtil.generateUser();
+        EmailData email = TestDataUtil.emailGenerate();
+
         HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        ContactUsPage contactUsPage = homePage.clickContactUs();
+        Assert.assertTrue(contactUsPage.isGetInTouchVisible(), "Get in touch title is not visible");
+        contactUsPage.enterContactUsForm(user.getFirstName(), user.getEmail(), email.getSubject(), email.getContent());
+        contactUsPage.uploadFile("testImage.png");
+        contactUsPage.clickSubmitButton();
+        contactUsPage.acceptAlert();
+        Assert.assertTrue(contactUsPage.isStatusAlertVisible(), "Status alert is not visible");
+        homePage = contactUsPage.clickHomeButton();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
     }
 
