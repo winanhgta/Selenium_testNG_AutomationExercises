@@ -2,6 +2,7 @@ package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.constants.FrameworkConstants;
 import com.huy.automationexercise.driver.DriverManager;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,6 +32,15 @@ public class BasePage {
 
     protected boolean isDisplayed(WebElement element){
         return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+    }
+
+    protected boolean isAlertDisplayed(){
+        try{
+            wait.until(ExpectedConditions.alertIsPresent());
+            return true;
+        } catch (TimeoutException e){
+            return false;
+        }
     }
 
     protected void uploadFile(WebElement element, String filePath) {
