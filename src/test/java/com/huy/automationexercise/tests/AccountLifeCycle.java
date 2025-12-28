@@ -41,7 +41,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
-    public void testLoginSuccessfullyWithCorrectEmailAndPassword() throws InterruptedException {
+    public void testLoginSuccessfullyWithCorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
 
         //Create account first
