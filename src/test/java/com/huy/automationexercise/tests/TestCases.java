@@ -5,6 +5,7 @@ import com.huy.automationexercise.common.BaseTest;
 import com.huy.automationexercise.utils.EmailData;
 import com.huy.automationexercise.utils.TestDataUtil;
 import com.huy.automationexercise.utils.UserData;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -18,9 +19,11 @@ import com.huy.automationexercise.page.*;
 @Feature("User Management")
 @Story("Create and Delete Account Flow")
 
-public class AccountLifeCycle extends BaseTest {
+public class TestCases extends BaseTest {
+
     @Test
-    public void testLoginSuccessfullyWithCorrectUserAndPassword() {
+    @Description("Test register user and delete user account successfully")
+    public void testRegisterAndDeleteUserAccountSuccessfully() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
@@ -41,6 +44,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
+    @Description("Test login user successfully with correct email and password")
     public void testLoginSuccessfullyWithCorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
 
@@ -57,7 +61,6 @@ public class AccountLifeCycle extends BaseTest {
         signupLoginPage = homePage.clickLogout();
 
         //Login and delete account
-
         Assert.assertTrue(signupLoginPage.isLoginToYourAccountVisible(), "Login to your account text is not visible");
         homePage = signupLoginPage.login(user.getEmail(),user.getPassword());
         Assert.assertTrue(homePage.isLoggedInAs(user.getFirstName() + " " + user.getLastName()), "Logged in as text is not visible");
@@ -66,6 +69,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
+    @Description("Test login user unsuccessfully with incorrect email and password")
     public void testLoginUserUnsuccessfullyWithIncorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -77,6 +81,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
+    @Description("Test logout user successfully")
     public void testLogoutUser(){
         HomePage homePage = new HomePage();
 
@@ -101,6 +106,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
+    @Description("Test register user with existing email")
     public void testRegisterUserWithExistingEmail() {
         HomePage homePage = new HomePage();
 
@@ -124,6 +130,7 @@ public class AccountLifeCycle extends BaseTest {
     }
 
     @Test
+    @Description("Test contact us form")
     public void testContactUsForm(){
         UserData user = TestDataUtil.generateUser();
         EmailData email = TestDataUtil.emailGenerate();
@@ -140,5 +147,16 @@ public class AccountLifeCycle extends BaseTest {
         homePage = contactUsPage.clickHomeButton();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
     }
+
+    @Test
+    @Description("Test verify test cases page")
+    public void testVerifyTestCasesPage() {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        TestCasesPage testCasesPage = homePage.clickTestCases();
+        Assert.assertTrue(testCasesPage.isCurrentUrl(), "User is navigated to test cases page unsuccessfully");
+    }
+
+
 
 }
