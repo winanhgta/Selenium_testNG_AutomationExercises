@@ -29,6 +29,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[text()=' Contact us']")
     private WebElement contactUsLink;
 
+    @FindBy(xpath = "//li/a[contains(@href, 'test_cases')]")
+    private WebElement testCasesLink;
+
 
     // Sửa Constructor: Tự lấy driver từ DriverManager
     public HomePage() {
@@ -72,5 +75,11 @@ public class HomePage extends BasePage {
     public ContactUsPage clickContactUs(){
         clickToElement(contactUsLink);
         return new ContactUsPage();
+    }
+
+    @Step("Click testcases link")
+    public TestCasesPage clickTestCases(){
+        clickToElement(testCasesLink);
+        return new TestCasesPage();
     }
 }
