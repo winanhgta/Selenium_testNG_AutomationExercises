@@ -2,6 +2,7 @@ package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.constants.FrameworkConstants;
 import com.huy.automationexercise.driver.DriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -45,5 +46,20 @@ public class BasePage {
 
     protected void uploadFile(WebElement element, String filePath) {
         element.sendKeys(filePath);
+    }
+
+    protected boolean isCurrentUrlDisplayed(String url){
+        return wait.until(ExpectedConditions.urlContains(url));
+    }
+
+    protected void scrollToElement(WebElement element) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+            // scrollIntoView(true) sẽ đưa đỉnh element lên đỉnh màn hình
+            // Nhưng dùng script dưới đây sẽ đưa element vào giữa màn hình (tối ưu hơn)
+            js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+        } catch (Exception e) {
+            System.out.println("Could not scroll to element: " + e.getMessage());
+        }
     }
 }
