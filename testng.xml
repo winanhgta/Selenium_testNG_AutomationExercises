@@ -6,9 +6,9 @@
         <listener class-name="com.huy.automationexercise.TestListener.TestListener"/>
     </listeners>
 
-    <test name="Account Life Cycle Tests">
+    <test name="TestCases">
         <classes>
-            <class name="com.huy.automationexercise.tests.AccountLifeCycle"/>
+            <class name="com.huy.automationexercise.tests.TestCases"/>
         </classes>
     </test>
 </suite>
