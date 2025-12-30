@@ -9,6 +9,25 @@ import java.util.Objects;
 public class ProductDetailsPage extends BasePage {
     private int index;
 
+    @FindBy(xpath = "//div[@class='product-information']/h2")
+    private WebElement productName;
+
+    @FindBy(xpath = "//p[contains(text(),'Category')]")
+    private WebElement productCategory;
+
+    @FindBy(xpath = "//span[contains(text(), 'Rs')]")
+    private WebElement productPrice;
+
+    @FindBy(xpath = "//p/b[contains(text(), 'Availability')]")
+    private WebElement productAvailability;
+
+    @FindBy(xpath = "//p/b[contains(text(), 'Condition')]")
+    private WebElement productCondition;
+
+    @FindBy(xpath = "//p/b[contains(text(), 'Brand')]")
+    private WebElement productBrand;
+
+
     public int getIndex() {
         return index;
     }
