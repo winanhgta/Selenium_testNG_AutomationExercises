@@ -1,6 +1,7 @@
 package com.huy.automationexercise.page;
 
 import io.qameta.allure.Step;
+import net.datafaker.Faker;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,6 +32,21 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//li/a[contains(@href, 'test_cases')]")
     private WebElement testCasesLink;
+
+    @FindBy(xpath = "//a[@href='/products']")
+    private WebElement productsLink;
+
+    @FindBy(xpath = "//h2[text()='Subscription']")
+    private WebElement subscriptionTitle;
+
+    @FindBy(xpath = "//input[@id='susbscribe_email']")
+    private WebElement subcribeEmailInput;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElement subcribeButton;
+
+    @FindBy(xpath = "//div[text()='You have been successfully subscribed!']")
+    private WebElement subcribeMessage;
 
 
     // Sửa Constructor: Tự lấy driver từ DriverManager
@@ -81,5 +97,30 @@ public class HomePage extends BasePage {
     public TestCasesPage clickTestCases(){
         clickToElement(testCasesLink);
         return new TestCasesPage();
+    }
+
+    @Step("Click all products link")
+    public ProductsPage clickAllProducts(){
+        clickToElement(productsLink);
+        return new ProductsPage();
+    }
+
+    @Step("Verify that subscription title is visible")
+    public boolean isSubscriptionTitleVisible(){
+        scrollToElement(subscriptionTitle);
+        return isDisplayed(subscriptionTitle);
+    }
+
+    @Step("Enter email and click subscribe button")
+    public void subcribeEmail(){
+        Faker faker = new Faker();
+        String email = faker.internet().emailAddress();
+        sendKeysToElement(subcribeEmailInput, email);
+        clickToElement(subcribeButton);
+    }
+
+    @Step("Verify that success message 'You have been successfully subscribed!' is visible")
+    public boolean isSubcribeMessageVisible(){
+        return isDisplayed(subcribeMessage);
     }
 }
