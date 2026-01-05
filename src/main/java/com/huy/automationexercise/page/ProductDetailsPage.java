@@ -2,6 +2,8 @@ package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
 import io.qameta.allure.Step;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Objects;
@@ -45,6 +47,11 @@ public class ProductDetailsPage extends BasePage {
     public boolean isDetailPageLanded() {
         wait.until(ExpectedConditions.urlContains("/product_details/"));
         return Objects.requireNonNull(DriverManager.getDriver().getCurrentUrl()).contains("/product_details/" + index);
+    }
+
+    @Step("Verify that detail is visible: product name, category, price, availability, condition, brand")
+    public boolean isDetailVisible(){
+        return isDisplayed(productName) && isDisplayed(productCategory) && isDisplayed(productPrice) && isDisplayed(productAvailability) && isDisplayed(productCondition) && isDisplayed(productBrand);
     }
 
 
