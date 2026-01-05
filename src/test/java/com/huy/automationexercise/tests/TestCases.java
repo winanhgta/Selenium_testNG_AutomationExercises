@@ -157,6 +157,38 @@ public class TestCases extends BaseTest {
         Assert.assertTrue(testCasesPage.isCurrentUrl(), "User is navigated to test cases page unsuccessfully");
     }
 
+    @Test
+    @Description("Test verify all products and product detail page")
+    public void testVerifyAllProductAndProductDetailPage(){
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        ProductsPage allProductsPage = homePage.clickAllProducts();
+        Assert.assertTrue(allProductsPage.isProductsListVisible(), "Products list is not visible");
+        ProductDetailsPage productDetailsPage = allProductsPage.clickViewProductButton(1);
+        Assert.assertTrue(productDetailsPage.isDetailPageLanded(), "User is not landed to product detail page");
+        Assert.assertTrue(productDetailsPage.isDetailVisible(), "Product detail is not visible");
+    }
 
+    @Test
+    @Description("Test search product")
+    public void testSearchProduct(){
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        ProductsPage productsPage = homePage.clickAllProducts();
+        Assert.assertTrue(productsPage.isProductPageLanded(), "User is navigated to ALL PRODUCTS page unsuccessfully");
+        productsPage.searchedProduct();
+        Assert.assertTrue(productsPage.isSearchedProductsTitleVisible(),"Searched Products title is not visible");
+        Assert.assertTrue(productsPage.areAllSearchedProductsVisible(), "All the products related to search are not visible");
+    }
+
+    @Test
+    @Description("Verify subscription in home page")
+    public void testSubcription(){
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        Assert.assertTrue(homePage.isSubscriptionTitleVisible(),"Subscription title is not visible");
+        homePage.subcribeEmail();
+        Assert.assertTrue(homePage.isSubcribeMessageVisible(), "Success message 'You have been successfully subscribed!' is not visible");
+    }
 
 }
