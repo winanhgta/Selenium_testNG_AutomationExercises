@@ -1,5 +1,6 @@
 package com.huy.automationexercise.page;
 
+import com.huy.automationexercise.utils.TestDataUtil;
 import io.qameta.allure.Step;
 import net.datafaker.Faker;
 import org.openqa.selenium.WebElement;
@@ -115,6 +116,7 @@ public class HomePage extends BasePage {
     public void subcribeEmail(){
         Faker faker = new Faker();
         String email = faker.internet().emailAddress();
+        System.out.println("Email: "+email);
         sendKeysToElement(subcribeEmailInput, email);
         clickToElement(subcribeButton);
     }

@@ -109,8 +109,9 @@ public class RegisterPage extends BasePage {
         selectYear.selectByVisibleText(user.getYear());
     }
 
-    @Step("Select 2 checkboxes")
+    @Step("Select 2 checkboxes {newsletterCheckbox} and {specialOffersCheckbox}")
     public void selectCheckboxes() {
+        scrollToElement(newsletterCheckbox);
         clickToElement(newsletterCheckbox);
         clickToElement(specialOffersCheckbox);
     }

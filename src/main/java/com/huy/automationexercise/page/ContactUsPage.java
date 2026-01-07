@@ -1,6 +1,7 @@
 package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
+import com.huy.automationexercise.utils.WebUI;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,6 +65,7 @@ public class ContactUsPage extends BasePage{
 
     @Step("Click submit button")
     public void clickSubmitButton(){
+        WebUI.removeAds();
         clickToElement(submitButton);
     }
 

@@ -42,7 +42,7 @@ public class ProductDetailsPage extends BasePage {
         super();
         this.index = index;
     }
-//TODO: Finish detail page testcase
+
     @Step("Verify that user is landed to product detail page")
     public boolean isDetailPageLanded() {
         wait.until(ExpectedConditions.urlContains("/product_details/"));
