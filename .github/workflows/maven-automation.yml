@@ -46,3 +46,16 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
+
+      - name: Send Telegram Notification
+        uses: appleboy/telegram-action@master
+        if: always() # Luôn chạy kể cả test Pass hay Fail
+        with:
+          to: ${{ secrets.Telegram_To }}
+          token: ${{ secrets.Telegram_Token }}
+          format: html
+          message: |
+            <b>🚀 Kết quả chạy Test trên GitHub</b>
+            <b>Dự án:</b> ${{ github.repository }}
+            <b>Trạng thái:</b> ${{ job.status == 'success' && '✅ THÀNH CÔNG' || '❌ THẤT BẠI' }}
+            <b>Link báo cáo:</b> https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
