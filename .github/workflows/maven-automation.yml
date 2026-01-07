@@ -37,7 +37,7 @@ jobs:
         uses: simple-elf/allure-report-action@master
         if: always()
         with:
-          allure_results: target/allure-results
+          allure_results: ${{ github.workspace }}/target/allure-results
           allure_history: allure-history
 
       - name: Deploy Allure Report to GitHub Pages
