@@ -106,15 +106,31 @@ public enum BrowserFactory {
     @Override
     public FirefoxOptions getOptions() {
         FirefoxOptions options = new FirefoxOptions();
+        Map<String, Object> prefs = new HashMap<>();
 
+        // Chặn các popup gây phiền nhiễu và tắt lưu mật khẩu
+        prefs.put("profile.default_content_setting_values.notifications", 2);
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("autofill.profile_enabled", false);
+
+        // Gom nhóm các tham số cấu hình hệ thống
+        options.addArguments("--disable-infobars", "--disable-extensions");
         options.setAcceptInsecureCerts(true);
+        options.addArguments("--disable-notifications"); // Tắt thông báo đẩy
+        options.addArguments("--disable-popup-blocking"); // Tắt chặn popup
+        options.addArguments("--dns-prefetch-disable"); // Tắt dự đoán DNS để tăng tốc load ban đầu
 
-        if (Boolean.valueOf(FrameworkConstants.HEADLESS) == true) {
-            options.addArguments("-headless");
-            options.addArguments("--width=1920");
-            options.addArguments("--height=1080");
+        // Kiểm tra chế độ Headless từ Constants
+        if (Boolean.parseBoolean(FrameworkConstants.HEADLESS)) {
+            options.addArguments("--headless=new", "--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
+            options.addArguments("--disable-notifications"); // Tắt thông báo đẩy
+            options.addArguments("--disable-popup-blocking"); // Tắt chặn popup
+            options.addArguments("--disable-infobars"); // Tắt thanh "Chrome is being controlled..."
+            options.addArguments("--dns-prefetch-disable"); // Tắt dự đoán DNS để tăng tốc load ban đầu
+        } else {
+            options.addArguments("--start-maximized");
         }
-
         return options;
     }
 }, SAFARI {
