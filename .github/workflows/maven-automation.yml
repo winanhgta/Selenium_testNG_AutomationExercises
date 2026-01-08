@@ -76,8 +76,46 @@ jobs:
 #          github_token: ${{ secrets.GITHUB_TOKEN }}
 #          publish_dir: allure-history # Đẩy thư mục đã gom đủ dữ liệu lên
 
+#      - name: Run Tests with Maven
+#        run: mvn clean test -Dheadless=true -Dmaven.test.failure.ignore=true
+#
+#      - name: Allure Report Action
+#        uses: simple-elf/allure-report-action@master
+#        if: always()
+#        with:
+#                allure_results: target/allure-results
+#                allure_history: allure-history
+#                keep_reports: 20
+#
+#      - name: Deploy Allure Report
+#        if: always()
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#                github_token: ${{ secrets.GITHUB_TOKEN }}
+#                publish_dir: allure-history # Đảm bảo đúng folder này
+
       - name: Run Tests with Maven
-        run: mvn clean test -Dheadless=true -Dmaven.test.failure.ignore=true
+      # Thêm -Dallure.results.directory để ép Maven ghi đúng chỗ
+        run: |
+            mkdir -p target/allure-results
+            mvn clean test -Dheadless=true -Dmaven.test.failure.ignore=true -Dallure.results.directory=target/allure-results
+
+      - name: Debug Allure Results
+        if: always()
+        run: |
+          echo "Check if target exists:"
+          ls -d target || echo "Target folder NOT found"
+          echo "Check if allure-results exists:"
+          ls -d target/allure-results || echo "allure-results folder NOT found"
+          echo "List files in allure-results:"
+          ls target/allure-results || echo "No files in allure-results"
+
+      - name: List Allure Results (Debug)
+        if: always()
+        run: |
+                echo "Kiểm tra thư mục target:"
+                ls -d target/allure-results || echo "Không thấy thư mục!"
+                ls target/allure-results || echo "Thư mục trống không có file json nào!"
 
       - name: Allure Report Action
         uses: simple-elf/allure-report-action@master
@@ -86,13 +124,6 @@ jobs:
                 allure_results: target/allure-results
                 allure_history: allure-history
                 keep_reports: 20
-
-      - name: Deploy Allure Report
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                publish_dir: allure-history # Đảm bảo đúng folder này
 
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
