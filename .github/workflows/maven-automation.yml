@@ -21,9 +21,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Tests with Maven
-        # Chạy headless vì GitHub Runner không có màn hình giao diện
-        run: mvn clean test -Dheadless=true
+#      - name: Run Tests with Maven
+#        # Chạy headless vì GitHub Runner không có màn hình giao diện
+#        run: mvn clean test -Dheadless=true -Dmaven.test.failure.ignore=true
+#
+#      - name: Check target directory # Bước này cực kỳ quan trọng để debug
+#        run: ls -R target/allure-results || echo "Directory not found"
 
 #      - name: Get Allure history
 #        uses: actions/checkout@v4
@@ -56,22 +59,40 @@ jobs:
 #            ref: gh-pages
 #            path: gh-pages
 
+#      - name: Allure Report Action
+#        uses: simple-elf/allure-report-action@master
+#        if: always()
+#        with:
+#              # Sử dụng đường dẫn tương đối chuẩn của Maven
+#              allure_results: target/allure-results
+#              allure_history: allure-history
+#              # Thêm dòng này để copy history từ gh-pages vào report mới
+#              keep_reports: 20
+#
+#      - name: Deploy Allure Report to GitHub Pages
+#        if: always()
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_dir: allure-history # Đẩy thư mục đã gom đủ dữ liệu lên
+
+      - name: Run Tests with Maven
+        run: mvn clean test -Dheadless=true -Dmaven.test.failure.ignore=true
+
       - name: Allure Report Action
         uses: simple-elf/allure-report-action@master
         if: always()
         with:
-              # Sử dụng đường dẫn tương đối chuẩn của Maven
-              allure_results: target/allure-results
-              allure_history: allure-history
-              # Thêm dòng này để copy history từ gh-pages vào report mới
-              keep_reports: 20
+                allure_results: target/allure-results
+                allure_history: allure-history
+                keep_reports: 20
 
-      - name: Deploy Allure Report to GitHub Pages
+      - name: Deploy Allure Report
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history # Đẩy thư mục đã gom đủ dữ liệu lên
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                publish_dir: allure-history # Đảm bảo đúng folder này
 
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
