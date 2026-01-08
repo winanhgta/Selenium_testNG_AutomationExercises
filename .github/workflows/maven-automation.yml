@@ -124,6 +124,16 @@ jobs:
                 allure_results: target/allure-results
                 allure_history: allure-history
                 keep_reports: 20
+                single_file: false # Đảm bảo không nén thành 1 file duy nhất
+
+      - name: Deploy Allure Report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: allure-history # Đẩy toàn bộ nội dung trong folder này lên
+            # Thêm dòng này để GitHub Pages không chặn các file của Allure
+            keep_files: true
 
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
