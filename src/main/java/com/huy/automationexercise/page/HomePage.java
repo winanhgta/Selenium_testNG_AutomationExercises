@@ -1,6 +1,5 @@
 package com.huy.automationexercise.page;
 
-import com.huy.automationexercise.utils.TestDataUtil;
 import io.qameta.allure.Step;
 import net.datafaker.Faker;
 import org.openqa.selenium.WebElement;
@@ -21,7 +20,6 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[contains(@href, '/logout')]")
     private WebElement logoutLink;
 
-    // A stable element to verify the page has loaded
     @FindBy(className = "features_items")
     private WebElement featuresItemsSection;
 
@@ -41,16 +39,17 @@ public class HomePage extends BasePage {
     private WebElement subscriptionTitle;
 
     @FindBy(xpath = "//input[@id='susbscribe_email']")
-    private WebElement subcribeEmailInput;
+    private WebElement subscribeEmailInput;
 
     @FindBy(xpath = "//button[@type='submit']")
-    private WebElement subcribeButton;
+    private WebElement subscribeButton;
 
     @FindBy(xpath = "//div[text()='You have been successfully subscribed!']")
-    private WebElement subcribeMessage;
+    private WebElement subscribeMessage;
 
+    @FindBy(xpath = "//a[@href='/view_cart']")
+    private WebElement cartButton;
 
-    // Sửa Constructor: Tự lấy driver từ DriverManager
     public HomePage() {
         super();
     }
@@ -106,23 +105,29 @@ public class HomePage extends BasePage {
         return new ProductsPage();
     }
 
-    @Step("Verify that subscription title is visible")
+    @Step("Scroll down and verify that subscription title is visible")
     public boolean isSubscriptionTitleVisible(){
         scrollToElement(subscriptionTitle);
         return isDisplayed(subscriptionTitle);
     }
 
     @Step("Enter email and click subscribe button")
-    public void subcribeEmail(){
+    public void subscribeEmail(){
         Faker faker = new Faker();
         String email = faker.internet().emailAddress();
         System.out.println("Email: "+email);
-        sendKeysToElement(subcribeEmailInput, email);
-        clickToElement(subcribeButton);
+        sendKeysToElement(subscribeEmailInput, email);
+        clickToElement(subscribeButton);
     }
 
     @Step("Verify that success message 'You have been successfully subscribed!' is visible")
-    public boolean isSubcribeMessageVisible(){
-        return isDisplayed(subcribeMessage);
+    public boolean isSubscribeMessageVisible(){
+        return isDisplayed(subscribeMessage);
+    }
+
+    @Step("Click cart button and navigate to cart page")
+    public CartPage clickCartButton(){
+        clickToElement(cartButton);
+        return new CartPage();
     }
 }

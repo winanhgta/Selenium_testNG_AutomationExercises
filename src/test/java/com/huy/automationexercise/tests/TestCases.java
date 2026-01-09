@@ -1,6 +1,5 @@
 package com.huy.automationexercise.tests;
 
-import com.huy.automationexercise.TestListener.AllureManagerListener;
 import com.huy.automationexercise.common.BaseTest;
 import com.huy.automationexercise.utils.EmailData;
 import com.huy.automationexercise.utils.TestDataUtil;
@@ -10,7 +9,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.huy.automationexercise.page.*;
 
@@ -22,7 +20,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test register user and delete user account successfully")
-    public void testRegisterAndDeleteUserAccountSuccessfully() {
+    public void registerAndDeleteUserAccountSuccessfully() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
@@ -44,7 +42,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test login user successfully with correct email and password")
-    public void testLoginSuccessfullyWithCorrectEmailAndPassword(){
+    public void loginSuccessfullyWithCorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
 
         //Create account first
@@ -69,7 +67,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test login user unsuccessfully with incorrect email and password")
-    public void testLoginUserUnsuccessfullyWithIncorrectEmailAndPassword(){
+    public void loginUserUnsuccessfullyWithIncorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         SignupLoginPage signupLoginPage = homePage.clickSignupLogin();
@@ -81,7 +79,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test logout user successfully")
-    public void testLogoutUser(){
+    public void logoutUser(){
         HomePage homePage = new HomePage();
 
         //Create account first
@@ -106,7 +104,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test register user with existing email")
-    public void testRegisterUserWithExistingEmail() {
+    public void registerUserWithExistingEmail() {
         HomePage homePage = new HomePage();
 
         //Create account first
@@ -130,7 +128,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test contact us form")
-    public void testContactUsForm(){
+    public void contactUsForm(){
         UserData user = TestDataUtil.generateUser();
         EmailData email = TestDataUtil.emailGenerate();
 
@@ -149,7 +147,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test verify test cases page")
-    public void testVerifyTestCasesPage() {
+    public void verifyTestCasesPage() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         TestCasesPage testCasesPage = homePage.clickTestCases();
@@ -158,7 +156,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test verify all products and product detail page")
-    public void testVerifyAllProductAndProductDetailPage(){
+    public void verifyAllProductAndProductDetailPage(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         ProductsPage allProductsPage = homePage.clickAllProducts();
@@ -170,7 +168,7 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Test search product")
-    public void testSearchProduct(){
+    public void searchProduct(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         ProductsPage productsPage = homePage.clickAllProducts();
@@ -182,12 +180,22 @@ public class TestCases extends BaseTest {
 
     @Test
     @Description("Verify subscription in home page")
-    public void testSubcription(){
+    public void subcriptionInHomePage(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         Assert.assertTrue(homePage.isSubscriptionTitleVisible(),"Subscription title is not visible");
-        homePage.subcribeEmail();
-        Assert.assertTrue(homePage.isSubcribeMessageVisible(), "Success message 'You have been successfully subscribed!' is not visible");
+        homePage.subscribeEmail();
+        Assert.assertTrue(homePage.isSubscribeMessageVisible(), "Success message 'You have been successfully subscribed!' is not visible");
     }
 
+    @Test
+    @Description("Verify subscription in Cart page")
+    public void subscriptionInCartPage() {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        CartPage cartPage = homePage.clickCartButton();
+        Assert.assertTrue(cartPage.isSubscriptionTitleVisible(),"Subscription title is not visible");
+        cartPage.subscribeEmail();
+        Assert.assertTrue(cartPage.isSubscribeMessageVisible(), "Success message 'You have been successfully subscribed!' is not visible");
+    }
 }
