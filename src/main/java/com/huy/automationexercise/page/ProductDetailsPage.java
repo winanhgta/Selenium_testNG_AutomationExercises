@@ -1,6 +1,7 @@
 package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
+import com.huy.automationexercise.utils.WebUI;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,6 +46,7 @@ public class ProductDetailsPage extends BasePage {
 
     @Step("Verify that user is landed to product detail page")
     public boolean isDetailPageLanded() {
+        WebUI.removeAds();
         wait.until(ExpectedConditions.urlContains("/product_details/"));
         return Objects.requireNonNull(DriverManager.getDriver().getCurrentUrl()).contains("/product_details/" + index);
     }

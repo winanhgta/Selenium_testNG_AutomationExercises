@@ -1,5 +1,6 @@
 package com.huy.automationexercise.page;
 
+import com.huy.automationexercise.utils.WebUI;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,7 @@ public class AccountCreatedPage extends BasePage {
 
     @Step("Click continue button and navigate to Home page")
     public HomePage clickContinueButton(){
+        WebUI.removeAds();
         clickToElement(continueButton);
         return new HomePage();
     }
