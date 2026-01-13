@@ -198,4 +198,14 @@ public class TestCases extends BaseTest {
         cartPage.subscribeEmail();
         Assert.assertTrue(cartPage.isSubscribeMessageVisible(), "Success message 'You have been successfully subscribed!' is not visible");
     }
+
+    @Test
+    @Description("TC12: Test add product in Cart")
+    public void addProductInCart() throws InterruptedException {
+        HomePage homePage = new HomePage();
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        ProductsPage productPage = homePage.clickAllProducts();
+        productPage.hoverOnProduct(1);
+        Thread.sleep(10000);
+    }
 }

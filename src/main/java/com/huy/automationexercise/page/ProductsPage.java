@@ -18,8 +18,17 @@ public class ProductsPage extends BasePage{
     @FindBy(xpath = "//div[@class='features_items']")
     private WebElement featuresItemsSection;
 
-    @FindBy(xpath = "//div[@class='col-sm-4']")
+    @FindBy(xpath = "//div[@class='features_items']//div[@class='col-sm-4']")
     private List<WebElement> allProducts;
+
+    @FindBy(xpath = "//div[@class='product-overlay']//div[@class='overlay-content']//a[@class='btn btn-default add-to-cart']")
+    private WebElement addToCartButtonOnHover;
+
+    @FindBy(xpath = "//div[@class='modal-footer']//button[text()='Continue Shopping']")
+    private WebElement continueShoppingButton;
+
+    @FindBy(xpath = "//div[@class='modal-body']//a[@href='/view_cart']")
+    private WebElement viewCartButtonOnAddedMessage;
 
     @FindBy(xpath = "//a[text()='View Product']")
     private WebElement viewProductButton;
@@ -57,6 +66,25 @@ public class ProductsPage extends BasePage{
         }
     }
 
+    @Step("Hover on the product position: {index} and click Add to cart")
+    public void hoverOnProduct(int index){
+        // if input is 1 -> index = 0. If input is 2 -> index = 1.
+        if (index-1 < allProducts.size() && index-1 >= 0) {
+            WebElement targetProduct = allProducts.get(index-1);
+            scrollToElement(targetProduct);
+            hoverOnElement(targetProduct);
+            WebElement targetButton = targetProduct.findElement((By) addToCartButtonOnHover);
+            clickToElement(targetButton);
+        } else {
+            throw new IllegalArgumentException("Index " + index + " is out of products list's range!");
+        }
+    }
+
+    @Step("Click continue Shopping button")
+    public void clickContinueShoppingButton(){
+        clickToElement(continueShoppingButton);
+    }
+
     @Step("Verify that user is landed to product detail page")
     public boolean isProductPageLanded() {
         wait.until(ExpectedConditions.urlContains("/products"));
@@ -65,8 +93,8 @@ public class ProductsPage extends BasePage{
 
     @Step("Click view product button of position: {index} product")
     public ProductDetailsPage clickViewProductButton(int index){
-        WebElement firstProduct = allProducts.get(index);
-        WebElement viewButton = firstProduct.findElement(By.xpath("//a[@href='/product_details/" + index + "' and contains(text(), 'View Product')]"));
+        WebElement targetProduct = allProducts.get(index);
+        WebElement viewButton = targetProduct.findElement(By.xpath("//a[@href='/product_details/" + index + "' and contains(text(), 'View Product')]"));
         scrollToElement(viewButton);
         clickToElement(viewButton);
         return new ProductDetailsPage(index);

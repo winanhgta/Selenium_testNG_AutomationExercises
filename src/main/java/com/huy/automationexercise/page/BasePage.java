@@ -6,6 +6,7 @@ import com.huy.automationexercise.utils.WebUI;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,13 @@ public class BasePage {
     public BasePage() {
         PageFactory.initElements(DriverManager.getDriver(), this);
         this.wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+    }
+
+    protected void hoverOnElement(WebElement element){
+        WebUI.removeAds();
+        wait.until(ExpectedConditions.visibilityOf(element));
+        Actions action = new Actions(DriverManager.getDriver());
+        action.moveToElement(element).perform();
     }
 
     protected void clickToElement(WebElement element) {
