@@ -19,7 +19,7 @@ import com.huy.automationexercise.page.*;
 public class TestCases extends BaseTest {
 
     @Test
-    @Description("Test register user and delete user account successfully")
+    @Description("TC1: Test register user and delete user account successfully")
     public void registerAndDeleteUserAccountSuccessfully() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -41,7 +41,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test login user successfully with correct email and password")
+    @Description("TC2: Test login user successfully with correct email and password")
     public void loginSuccessfullyWithCorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
 
@@ -66,7 +66,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test login user unsuccessfully with incorrect email and password")
+    @Description("TC3: Test login user unsuccessfully with incorrect email and password")
     public void loginUserUnsuccessfullyWithIncorrectEmailAndPassword(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -78,7 +78,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test logout user successfully")
+    @Description("TC4: Test logout user successfully")
     public void logoutUser(){
         HomePage homePage = new HomePage();
 
@@ -103,7 +103,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test register user with existing email")
+    @Description("TC5: Test register user with existing email")
     public void registerUserWithExistingEmail() {
         HomePage homePage = new HomePage();
 
@@ -127,7 +127,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test contact us form")
+    @Description("TC6: Test contact us form")
     public void contactUsForm(){
         UserData user = TestDataUtil.generateUser();
         EmailData email = TestDataUtil.emailGenerate();
@@ -146,7 +146,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test verify test cases page")
+    @Description("TC7: Test verify test cases page")
     public void verifyTestCasesPage() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -155,7 +155,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test verify all products and product detail page")
+    @Description("TC8: Test verify all products and product detail page")
     public void verifyAllProductAndProductDetailPage(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -167,7 +167,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Test search product")
+    @Description("TC9: Test search product")
     public void searchProduct(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
@@ -179,8 +179,8 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Verify subscription in home page")
-    public void subcriptionInHomePage(){
+    @Description("TC10: Verify subscription in home page")
+    public void subscriptionInHomePage(){
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         Assert.assertTrue(homePage.isSubscriptionTitleVisible(),"Subscription title is not visible");
@@ -189,7 +189,7 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    @Description("Verify subscription in Cart page")
+    @Description("TC11: Verify subscription in Cart page")
     public void subscriptionInCartPage() {
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
