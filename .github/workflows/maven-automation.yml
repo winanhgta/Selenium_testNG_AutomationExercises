@@ -64,15 +64,28 @@ jobs:
             # Thêm dòng này để GitHub Pages không chặn các file của Allure
             keep_files: true
 
+      - name: Set Time and Commit Message
+        if: always()
+        run: |
+          # Lấy thời gian hiện tại theo múi giờ Việt Nam (UTC+7)
+          echo "REPORT_TIME=$(date -d "+7 hours" "+%d/%m/%Y %H:%M:%S")" >> $GITHUB_ENV
+
+          # Thiết lập commit message nhiều dòng (Multiline)
+          echo "COMMIT_NAME<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.head_commit.message }}"
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
-        if: always() # Luôn chạy kể cả test Pass hay Fail
+        if: always()
         with:
           to: ${{ secrets.Telegram_To }}
           token: ${{ secrets.Telegram_Token }}
           format: html
           message: |
-            <b>🚀 Kết quả chạy Test trên GitHub</b>
-            <b>Dự án:</b> ${{ github.repository }}
-            <b>Trạng thái:</b> ${{ job.status == 'success' && '✅ THÀNH CÔNG' || '❌ THẤT BẠI' }}
-            <b>Link báo cáo:</b> https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+            <b>🚀 Test result run on GitHub</b>
+            <b>Project:</b> ${{ github.repository }}
+            <b>Commit:</b> <code>${{ env.COMMIT_NAME }}</code>
+            <b>Time:</b> ${{ env.REPORT_TIME }}
+            <b>Status:</b> ${{ job.status == 'success' && '✅ Success' || '❌ Fail' }}
+            <b>Report Link:</b> https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
