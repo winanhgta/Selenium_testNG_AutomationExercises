@@ -72,10 +72,12 @@ jobs:
           # Lấy thời gian hiện tại theo múi giờ Việt Nam (UTC+7)
           echo "REPORT_TIME=$(date -d "+7 hours" "+%d/%m/%Y %H:%M:%S")" >> $GITHUB_ENV
 
-          # Thiết lập commit message nhiều dòng (Multiline)
-          echo "COMMIT_NAME<<EOF" >> $GITHUB_ENV
-          echo "${{ github.event.head_commit.message }}"
-          echo "EOF" >> $GITHUB_ENV
+          # 2. Lấy nội dung commit cuối cùng bằng lệnh Git (An toàn nhất)
+          # %s là lấy dòng tiêu đề, %b là lấy phần thân. Ở đây mình lấy tiêu đề.
+          COMMIT_MSG=$(git log -1 --pretty=format:"%s")
+    
+          # 3. Loại bỏ ký tự lạ và lưu vào môi trường
+          echo "COMMIT_NAME=$COMMIT_MSG" >> $GITHUB_ENV
 
       - name: Send Telegram Notification
         uses: appleboy/telegram-action@master
