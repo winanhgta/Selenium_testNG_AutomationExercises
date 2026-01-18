@@ -19,6 +19,7 @@ public class BaseTest {
     public void createDriver(@Optional String browser) {
         WebDriver driver = targetFactory.createInstance(browser);
         DriverManager.setDriver(driver);
+        DriverManager.getDriver().manage().window().setSize(new org.openqa.selenium.Dimension(1920, 1080));
         DriverManager.getDriver().get(FrameworkConstants.URL);
         DriverManager.getDriver().manage().window().maximize();
         System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "ERROR");
