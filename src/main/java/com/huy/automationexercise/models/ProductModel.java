@@ -4,15 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data // Tự động tạo Getter, Setter, equals, canEqual, hashCode, và toString
-@AllArgsConstructor // Tạo Constructor cho tất cả các biến
-@NoArgsConstructor  // Tạo Constructor rỗng
-@Builder // Cho phép khởi tạo đối tượng theo kiểu chuỗi (Fluent API)
+@Data // Create Getter, Setter, equals, canEqual, hashCode, and toString
+@AllArgsConstructor // Create Constructor for all variables
+@NoArgsConstructor  // Create empty Constructor
+@Builder // Allow to create instance type string (Fluent API)
 public class ProductModel {
     private String description;
     private int rawPrice;
     private int quantity;
     private int total;
-
-
 }

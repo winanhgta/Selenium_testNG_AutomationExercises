@@ -57,7 +57,7 @@ public class CartPage extends BasePage{
         List<ProductModel> actualList = new ArrayList<>();
         List<WebElement> rows = DriverManager.getDriver().findElements(By.xpath("//table[@class='table table-condensed']//tbody//tr[contains(@id, 'product')]"));
         for (WebElement row : rows) {
-            // Dùng Xpath tương đối (có dấu chấm đầu) để tìm bên trong từng 'row'
+            // Use relative xpath ( . at the beginning) to find inside each row
             String name = row.findElement(By.xpath(".//td[@class='cart_description']//a")).getText();
             String price = row.findElement(By.xpath(".//td[@class='cart_price']/p")).getText();
             String qty = row.findElement(By.xpath(".//td[@class='cart_quantity']/button")).getText();

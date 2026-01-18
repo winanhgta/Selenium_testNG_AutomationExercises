@@ -220,20 +220,21 @@ public class TestCases extends BaseTest {
         Assert.assertTrue(productPage.isProductAdded(),"Product is not added to cart");
         CartPage cartPage = productPage.clickViewCartLink();
         List<ProductModel> actualList = cartPage.getActualProductsInCart();
-        // 1. Kiểm tra số lượng dòng sản phẩm có khớp không
+
+        // Verify that numbers of product is matched or not
         Assert.assertEquals(actualList.size(), expectedList.size(), "Numbers of product don't match!");
 
-        // 2. So sánh chi tiết từng dòng
+        // Compare each row of product
         SoftAssert soft = new SoftAssert();
         for (int i = 0; i < expectedList.size(); i++) {
             ProductModel exp = expectedList.get(i);
             ProductModel act = actualList.get(i);
 
-            // So sánh Tên và Giá (lấy từ Product Page) với Tên và Giá (hiển thị trong Cart)
+            // Compare description and price (from ProductPage) to Description and Price (from CartPage)
             soft.assertEquals(act.getDescription(), exp.getDescription(), "Wrong product description at " + (i+1));
             soft.assertEquals(act.getRawPrice(), exp.getRawPrice(), "Wrong price at " + (i+1));
 
-            // Kiểm tra logic mặc định (Số lượng là 1 khi mới add)
+            // Check for quantity and total (Default quantity is 1 since it have just added
             soft.assertEquals(act.getQuantity(), 1, "Wrong quantity at " + (i+1));
             soft.assertEquals(act.getTotal(), exp.getRawPrice(), "Total must equal price at " + (i+1));
         }
