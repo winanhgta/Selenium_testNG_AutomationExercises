@@ -1,6 +1,8 @@
 package com.huy.automationexercise.page;
 
 import com.huy.automationexercise.driver.DriverManager;
+import com.huy.automationexercise.models.ProductModel;
+import com.huy.automationexercise.utils.TestDataUtil;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,6 +19,12 @@ public class ProductsPage extends BasePage{
 
     @FindBy(xpath = "//div[@class='features_items']")
     private WebElement featuresItemsSection;
+
+    @FindBy(xpath = "//div[@class='modal-header']//h4[text()='Added!']")
+    private WebElement addedTitle;
+
+    @FindBy(xpath = "//div[@class='modal-body']//p[@class='text-center']//a[@href='/view_cart']")
+    private WebElement viewCartLink;
 
     @FindBy(xpath = "//div[@class='features_items']//div[@class='col-sm-4']")
     private List<WebElement> allProducts;
@@ -67,17 +75,37 @@ public class ProductsPage extends BasePage{
     }
 
     @Step("Hover on the product position: {index} and click Add to cart")
-    public void hoverOnProduct(int index){
+    public ProductModel hoverOnProduct(int index){
+        String description;
+        String price;
         // if input is 1 -> index = 0. If input is 2 -> index = 1.
         if (index-1 < allProducts.size() && index-1 >= 0) {
             WebElement targetProduct = allProducts.get(index-1);
             scrollToElement(targetProduct);
             hoverOnElement(targetProduct);
-            WebElement targetButton = targetProduct.findElement((By) addToCartButtonOnHover);
+            WebElement targetButton = targetProduct.findElement(By.xpath(".//div[@class='product-overlay']//div[@class='overlay-content']//a[@class='btn btn-default add-to-cart']"));
+            description = targetProduct.findElement(By.xpath(".//div[@class='overlay-content']//p")).getText();
+            price = targetProduct.findElement(By.xpath(".//div[@class='overlay-content']//h2")).getText();
             clickToElement(targetButton);
         } else {
             throw new IllegalArgumentException("Index " + index + " is out of products list's range!");
         }
+        System.out.print(description + " " + Integer.parseInt(TestDataUtil.cleanNumber(price)));
+        return ProductModel.builder()
+                .description(description)
+                .rawPrice(Integer.parseInt(TestDataUtil.cleanNumber(price)))
+                .build();
+    }
+
+    @Step("Verify that product is added to cart")
+    public boolean isProductAdded(){
+        return isDisplayed(addedTitle);
+    }
+
+    @Step("Click View Cart link")
+    public CartPage clickViewCartLink(){
+        clickToElement(viewCartLink);
+        return new CartPage();
     }
 
     @Step("Click continue Shopping button")

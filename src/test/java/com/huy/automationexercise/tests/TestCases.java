@@ -1,6 +1,7 @@
 package com.huy.automationexercise.tests;
 
 import com.huy.automationexercise.common.BaseTest;
+import com.huy.automationexercise.models.ProductModel;
 import com.huy.automationexercise.utils.EmailData;
 import com.huy.automationexercise.utils.TestDataUtil;
 import com.huy.automationexercise.utils.UserData;
@@ -11,6 +12,10 @@ import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.huy.automationexercise.page.*;
+import org.testng.asserts.SoftAssert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Epic("Regression Test")
 @Feature("User Management")
@@ -202,10 +207,36 @@ public class TestCases extends BaseTest {
     @Test
     @Description("TC12: Test add product in Cart")
     public void addProductInCart() throws InterruptedException {
+        List<ProductModel> expectedList = new ArrayList<>();
         HomePage homePage = new HomePage();
         Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
         ProductsPage productPage = homePage.clickAllProducts();
-        productPage.hoverOnProduct(1);
-        Thread.sleep(10000);
+        ProductModel firstProduct = productPage.hoverOnProduct(1);
+        expectedList.add(firstProduct);
+        Assert.assertTrue(productPage.isProductAdded(),"Product is not added to cart");
+        productPage.clickContinueShoppingButton();
+        ProductModel secondProduct = productPage.hoverOnProduct(2);
+        expectedList.add(secondProduct);
+        Assert.assertTrue(productPage.isProductAdded(),"Product is not added to cart");
+        CartPage cartPage = productPage.clickViewCartLink();
+        List<ProductModel> actualList = cartPage.getActualProductsInCart();
+        // 1. Kiểm tra số lượng dòng sản phẩm có khớp không
+        Assert.assertEquals(actualList.size(), expectedList.size(), "Numbers of product don't match!");
+
+        // 2. So sánh chi tiết từng dòng
+        SoftAssert soft = new SoftAssert();
+        for (int i = 0; i < expectedList.size(); i++) {
+            ProductModel exp = expectedList.get(i);
+            ProductModel act = actualList.get(i);
+
+            // So sánh Tên và Giá (lấy từ Product Page) với Tên và Giá (hiển thị trong Cart)
+            soft.assertEquals(act.getDescription(), exp.getDescription(), "Wrong product description at " + (i+1));
+            soft.assertEquals(act.getRawPrice(), exp.getRawPrice(), "Wrong price at " + (i+1));
+
+            // Kiểm tra logic mặc định (Số lượng là 1 khi mới add)
+            soft.assertEquals(act.getQuantity(), 1, "Wrong quantity at " + (i+1));
+            soft.assertEquals(act.getTotal(), exp.getRawPrice(), "Total must equal price at " + (i+1));
+        }
+        soft.assertAll();
     }
 }

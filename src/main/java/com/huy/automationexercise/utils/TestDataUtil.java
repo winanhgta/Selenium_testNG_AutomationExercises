@@ -46,4 +46,21 @@ public class TestDataUtil {
         );
     }
 
-}
+        /**
+         * Hàm lấy ra chỉ số từ chuỗi chứa ký hiệu tiền tệ (Ví dụ: "Rs. 500" -> "500")
+         */
+        public static String cleanNumber(String text) {
+            if (text == null) return "";
+            return text.replaceAll("[^0-9]", "");
+        }
+
+        /**
+         * Hàm chuyển đổi trực tiếp từ chuỗi UI sang kiểu int để tính toán
+         */
+        public static int getNumberFromText(String text) {
+            String clean = cleanNumber(text);
+            return clean.isEmpty() ? 0 : Integer.parseInt(clean);
+        }
+    }
+
+
