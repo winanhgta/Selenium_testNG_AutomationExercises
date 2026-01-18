@@ -43,6 +43,8 @@ public enum BrowserFactory {
                 options.addArguments("--headless=new"); // Bắt buộc phải có trên Linux/CI
                 options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
+                options.addArguments("--no-sandbox"); // Bắt buộc cho môi trường Docker/Linux
+                options.addArguments("--disable-dev-shm-usage");
             } else {
                 options.addArguments(START_MAXIMIZED);
             }
