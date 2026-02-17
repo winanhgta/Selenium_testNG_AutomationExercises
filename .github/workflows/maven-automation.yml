@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
   # Thêm phần lập lịch chạy tự động dưới đây
-  schedule:
-    # 23:00 UTC là 06:00 sáng VN
-    # 05:00 UTC là 12:00 trưa VN
-    # 12:00 UTC là 19:00 tối VN
-    - cron: '0 23,5,12 * * *'
-  # Cho phép kích hoạt chạy thử thủ công bằng nút bấm trên giao diện GitHub
+#  schedule:
+#    # 23:00 UTC là 06:00 sáng VN
+#    # 05:00 UTC là 12:00 trưa VN
+#    # 12:00 UTC là 19:00 tối VN
+#    - cron: '0 23,5,12 * * *'
+#  # Cho phép kích hoạt chạy thử thủ công bằng nút bấm trên giao diện GitHub
   workflow_dispatch:
 
 jobs:

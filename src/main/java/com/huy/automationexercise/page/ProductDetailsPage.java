@@ -30,6 +30,15 @@ public class ProductDetailsPage extends BasePage {
     @FindBy(xpath = "//p/b[contains(text(), 'Brand')]")
     private WebElement productBrand;
 
+    @FindBy(xpath = "//input[@type='number']")
+    private WebElement productQuantity;
+
+    @FindBy(xpath = "//button[@class='btn btn-default cart']")
+    private WebElement addToCartButton;
+
+    @FindBy(xpath = "//div[@class='modal-body']//p[@class='text-center']//a[@href='/view_cart']")
+    private WebElement viewCartLink;
+
 
     public int getIndex() {
         return index;
@@ -55,6 +64,23 @@ public class ProductDetailsPage extends BasePage {
     public boolean isDetailVisible(){
         return isDisplayed(productName) && isDisplayed(productCategory) && isDisplayed(productPrice) && isDisplayed(productAvailability) && isDisplayed(productCondition) && isDisplayed(productBrand);
     }
+
+    @Step("Increase product quantity to {{quantity}}")
+    public void increaseQuanity(int quantity){
+        sendKeysToElement(productQuantity, String.valueOf(quantity));
+    }
+
+    @Step("Click Add to Cart button")
+    public void clickAddToCartButton(){
+        clickToElement(addToCartButton);
+    }
+
+    @Step("Click View Cart link")
+    public CartPage clickViewCartLink(){
+        clickToElement(viewCartLink);
+        return new CartPage();
+    }
+
 
 
 

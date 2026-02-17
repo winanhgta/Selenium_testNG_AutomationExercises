@@ -2,9 +2,13 @@ package com.huy.automationexercise.page;
 
 import io.qameta.allure.Step;
 import net.datafaker.Faker;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
+import java.util.Random;
 
 public class HomePage extends BasePage {
 
@@ -49,6 +53,12 @@ public class HomePage extends BasePage {
 
     @FindBy(xpath = "//a[@href='/view_cart']")
     private WebElement cartButton;
+
+    @FindBy(xpath = "//div[@class='features_items']//div[@class='col-sm-4']")
+    private List<WebElement> allProducts;
+
+    @FindBy(xpath = "//a[text()='View Product']")
+    private WebElement viewProductButton;
 
     public HomePage() {
         super();
@@ -129,5 +139,20 @@ public class HomePage extends BasePage {
     public CartPage clickCartButton(){
         clickToElement(cartButton);
         return new CartPage();
+    }
+
+    @Step("Click 'View Product' for any product on home page")
+    public ProductDetailsPage clickViewProduct(){
+        if (!allProducts.isEmpty()) {
+            Random rand = new Random();
+            int randomIndex = rand.nextInt(allProducts.size());
+            WebElement targetProduct = allProducts.get(randomIndex);
+            scrollToElement(targetProduct);
+            WebElement viewButton = targetProduct.findElement(By.xpath("//a[@href='/product_details/" + randomIndex + "' and contains(text(), 'View Product')]"));
+            clickToElement(viewButton);
+            return new ProductDetailsPage(randomIndex);
+        } else {
+            throw new RuntimeException("Product list is empty, can not click a random product");
+        }
     }
 }

@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Epic("Regression Test")
 @Feature("User Management")
@@ -239,5 +240,20 @@ public class TestCases extends BaseTest {
             soft.assertEquals(act.getTotal(), exp.getRawPrice(), "Total must equal price at " + (i+1));
         }
         soft.assertAll();
+    }
+
+    @Test
+    @Description("Verify product quantity in cart")
+    public void verifyProductInCart(){
+        HomePage homePage = new HomePage();
+        Random rand = new Random();
+        int quantity = rand.nextInt(2,10);
+        Assert.assertTrue(homePage.isPageVisible(), "Home page is not visible");
+        ProductDetailsPage productDetailsPage = homePage.clickViewProduct();
+        Assert.assertTrue(productDetailsPage.isDetailPageLanded(),"User is not landed to product detail page");
+        productDetailsPage.increaseQuanity(quantity);
+        productDetailsPage.clickAddToCartButton();
+        CartPage cartPage = productDetailsPage.clickViewCartLink();
+
     }
 }
